@@ -15,7 +15,7 @@ t_RIGHTBRACKET = r'\}'
 t_EQUAL = r'\='
 t_VAR = r'(\w+|\-)+'
 t_BOOLEAN = r'(false|true)'
-t_STRING = r'\".*\"'
+t_STRING = r'(\"[^"]+\")'
 t_MSTRING = r'\"\"\"(.*|\n)+\"\"\"' 
 t_DATE = r'(\d{4}\-\d{2}\-\d{2})'
 t_TIME = r'(\d{2}:\d{2}:\d{2}(\.\d{6})?)'
@@ -35,7 +35,7 @@ def t_error(t):
 
 lexer = lex.lex()
 
-f = open('toml2.toml','r')
+f = open('toml3.toml','r')
 lines = f.readlines()
 
 for line in lines:    
