@@ -13,8 +13,10 @@ def p_lista(p):
     """
     if len(p) == 2:
         p[0] = []
-    else:  
+    elif not isinstance(p[2],list):
         p[0] = [p[2]]
+    else:  
+        p[0] = p[2]
 
 def p_conteudo(p):
     """
@@ -22,9 +24,9 @@ def p_conteudo(p):
             | Elemento Conteudo2
     """
     if len(p) == 2:
-        p[0] = p[1]
+        p[0] = [p[1]] 
     else: 
-        p[0] = p[1] + p[2]
+        p[0] = [p[1]] + p[2]
 
 def p_conteudo2(p):
     """
@@ -34,7 +36,7 @@ def p_conteudo2(p):
     if len(p) == 2:
         p[0] = p[1]
     else: 
-        p[0] = p[1] + p[2]
+        p[0] = p[2]
 
 def p_conteudo_var(p):
     """
@@ -44,7 +46,7 @@ def p_conteudo_var(p):
     if len(p) == 2:
         p[0] = p[1]
     else: 
-        p[0] = p[1] + p[2] + p[3]
+        p[0] = p[1] + p[2] +p[3]
 
 def p_elemento2(p):
     """
@@ -52,7 +54,7 @@ def p_elemento2(p):
             | STRING
             | NUMBER
     """
-    p[0] = str(p[1])
+    p[0] = p[1]
 
 
 def p_elemento(p):
@@ -66,7 +68,7 @@ def p_elemento(p):
             | BOOLEAN
             | Lista
     """
-    p[0] = str(p[1])
+    p[0] = p[1]
 
 
 parser = yacc.yacc(debug=True, write_tables=True)
