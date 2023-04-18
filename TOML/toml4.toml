@@ -1,0 +1,13 @@
+tittle = "TOML EXAMPLE"
+
+[person]
+name = "John Doe"
+age = 30
+
+[address.road]
+street = "123 Main St"
+city = "Anytown"
+state = "CA"
+zip = 12345
+mylist = [0,false,"falso"]
+pessoa = { nome = "Nail", idade = 24 }

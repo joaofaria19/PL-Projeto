@@ -35,7 +35,7 @@ def t_error(t):
 
 lexer = lex.lex()
 
-f = open('toml3.toml','r')
+f = open('./TOML/toml4.toml','r')
 lines = f.readlines()
 
 for line in lines:    
