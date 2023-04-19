@@ -15,8 +15,8 @@ def p_program(p):
 def p_table(p):
     """
         table : LEFTSQUAREBRACKET Conteudo RIGHTSQUAREBRACKET
+            | LEFTSQUAREBRACKET LEFTSQUAREBRACKET Conteudo RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET
     """
-    
     p[0] = p[2]
 
 def p_conteudo(p):
