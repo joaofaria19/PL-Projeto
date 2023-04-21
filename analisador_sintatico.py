@@ -1,3 +1,4 @@
+
 import ply.yacc as yacc
 import analisador_lexico as lexer
 
@@ -17,17 +18,36 @@ def p_table(p):
         table : LEFTSQUAREBRACKET Conteudo RIGHTSQUAREBRACKET
             | LEFTSQUAREBRACKET LEFTSQUAREBRACKET Conteudo RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET
     """
-    p[0] = p[2]
+    if len(p) == 4:
+        p[0] = p[2]
+    else:
+        p[0] = [p[3]]
 
 def p_conteudo(p):
     """
         Conteudo : ElementoVar
-                | ElementoVar DOT ElementoVar
+                | ElementoVar Conteudo2
     """
     if len(p) == 2:
         p[0] = {'type': 'table', 'name': p[1]}
     else:
-        p[0] = {'type': 'table', 'name': p[1], 'value': {'type': 'table', 'name': p[3]}}
+        p[0] = {'type': 'table', 'name': p[1], 'value': p[2]}
+
+def p_assignment(p):
+    """
+        assignment : VAR EQUAL Elemento
+    """
+    p[0] = {'type': 'assignment', 'name': p[1], 'value': p[3]}
+
+def p_conteudo2(p):
+    """
+        Conteudo2 : DOT ElementoVar
+                | DOT ElementoVar Conteudo2
+    """
+    if len(p)==3:
+        p[0] = {'type': 'table', 'name': p[2]}
+    else:
+        p[0] = {'type': 'table', 'name': p[2], 'value': p[3]}
 
 def p_elemento_var(p):
     """
@@ -36,12 +56,6 @@ def p_elemento_var(p):
                     | NUMBER
     """
     p[0] = p[1]
-
-def p_assignment(p):
-    """
-        assignment : VAR EQUAL Elemento
-    """
-    p[0] = {'type': 'assignment', 'name': p[1], 'value': p[3]}
 
 def p_lista(p):
     """
@@ -114,7 +128,6 @@ def p_elemento(p):
              | datetime
              | lista
              | object
-
     """
     p[0] = p[1]
 
