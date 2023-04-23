@@ -1,6 +1,7 @@
 
 import ply.yacc as yacc
 import analisador_lexico as lexer
+import TOML as TOML
 
 tokens = lexer.tokens
 
@@ -15,13 +16,32 @@ def p_program(p):
 
 def p_table(p):
     """
-        table : LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET
+        table : LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET conteudo
+            | LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET conteudo
             | LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET
+            | LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET
     """
     if len(p) == 4:
-        p[0] = p[2]
+        obj = p.parser.toml.criar_tabela(p[2],{})
+        p[0] = obj
+    elif len(p)==6:
+        obj = p.parser.toml.criar_tabela(p[2],[])
+        p[0] = obj
+    elif len(p)==5:
+        obj = p.parser.toml.criar_tabela(p[2],p[4])
+        p[0] = obj
     else:
-        p[0] = [p[3]]
+        obj = p.parser.toml.criar_tabela(p[2],[p[4]])
+        p[0] = obj
+
+def p_assignment(p):
+    """
+        assignment : name  EQUAL elemento
+    """
+    obj = {}
+    obj= p.parser.toml.criar_tabela(p[1],p[3])
+    p[0] = obj
+
 
 def p_name(p):
     """
@@ -29,15 +49,9 @@ def p_name(p):
             | elementoVar name2
     """
     if len(p) == 2:
-        p[0] = {'type': 'table', 'name': p[1]}
+        p[0] = [p[1]]
     else:
-        p[0] = {'type': 'table', 'name': p[1], 'value': p[2]}
-
-def p_assignment(p):
-    """
-        assignment : VAR EQUAL elemento
-    """
-    p[0] = {'type': 'assignment', 'name': p[1], 'value': p[3]}
+        p[0] = [p[1]] + p[2]
 
 def p_name2(p):
     """
@@ -45,9 +59,21 @@ def p_name2(p):
             | DOT elementoVar name2
     """
     if len(p)==3:
-        p[0] = {'type': 'table', 'name': p[2]}
+        p[0] =  [p[2]]
     else:
-        p[0] = {'type': 'table', 'name': p[2], 'value': p[3]}
+        p[0] = [p[2]] + p[3]
+
+def p_conteudo(p):
+    """
+        conteudo : assignment
+                | assignment conteudo
+    """
+    obj = {}
+    if len(p) == 2:
+        p[0] = p[1]
+    else:
+        p[0] 
+
 
 def p_elemento_var(p):
     """
@@ -63,9 +89,9 @@ def p_lista(p):
             | LEFTSQUAREBRACKET ContList RIGHTSQUAREBRACKET
     """
     if len(p) == 2:
-        p[0] = {'type': 'list', 'value': []}
+        p[0] = []
     else:  
-        p[0] = {'type': 'list', 'value': p[2]} 
+        p[0] = p[2] 
 
 def p_conteudo_lista(p):
     """
@@ -135,42 +161,44 @@ def p_string(p):
     """
         string : STRING
     """
-    p[0] = {'type': 'string', 'value': p[1][1:-1]}
+    p[0] = p[1][1:-1]
 
 def p_number(p):
     """
         number : NUMBER
     """
-    p[0] = {'type': 'number', 'value': int(p[1])}
+    p[0] = int(p[1])
 
 def p_boolean(p):
     """
         boolean : BOOLEAN
     """
-    p[0] = {'type': 'boolean', 'value': bool(p[1])}
+    p[0] = bool(p[1])
 
 def p_date(p):
     """
         date : DATE
     """
-    p[0] = {'type': 'date', 'value': p[1][1:-1]}
+    p[0] = p[1][1:-1]
 
 def p_time(p):
     """
         time : TIME
     """
-    p[0] = {'type': 'time', 'value': p[1][1:-1]}
+    p[0] = p[1][1:-1]
 
 def p_datetime(p):
     """
         datetime : DATETIME
     """
-    p[0] = {'type': 'datetime', 'value': p[1][1:-1]}
+    p[0] = p[1][1:-1]
 
 
 
 # Inicialização do parser
 parser = yacc.yacc()
+
+parser.toml = TOML.TOMLtable()
 
 f = open('./TOML/toml4.toml','r')
 lines = f.readlines()

@@ -1,13 +1,21 @@
 tittle = "TOML EXAMPLE"
 
 [person]
-name = "John Doe"
-age = 30
+name.proprio = "John Doe"
+age.birth = 30
 
-[address.road]
+[animal.pet]
+#[animal]
+type = "dog"
+name = "Puffy"
+age = 3
+
+[address.road.California]
+#[address]
 street = "123 Main St"
 city = "Anytown"
 state = "CA"
 zip = 12345
 mylist = [0,false,"falso"]
 pessoa = { nome = "Nail", idade = 24 }
+final = true
