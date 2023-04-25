@@ -1,6 +1,7 @@
 
 import ply.yacc as yacc
 import analisador_lexico as lexer
+import TOML as TOML
 
 tokens = lexer.tokens
 
@@ -10,8 +11,24 @@ def p_program(p):
     """
         program : table
                 | assignment
+                | empty
+                | comment
     """
     p[0] = p[1]
+
+
+def p_comment(p):
+    """
+        comment : COMMENT
+    """
+    p[0] = {'type': 'comment'}
+
+
+def p_empty(p):
+    """
+        empty : EMPTY
+    """
+    p[0] = {'type': 'empty'}
 
 def p_table(p):
     """
@@ -19,9 +36,15 @@ def p_table(p):
             | LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET
     """
     if len(p) == 4:
-        p[0] = p[2]
+        p[0] = {'type': 'table_dict','name': p[2]}
     else:
-        p[0] = [p[3]]
+        p[0] = {'type': 'table_list','name': p[3]}
+
+def p_assignment(p):
+    """
+        assignment : name EQUAL elemento
+    """
+    p[0] = {'type': 'assignment','value': p.parser.toml.new_assignment(p[1],p[3])}
 
 def p_name(p):
     """
@@ -29,15 +52,9 @@ def p_name(p):
             | elementoVar name2
     """
     if len(p) == 2:
-        p[0] = {'type': 'table', 'name': p[1]}
+        p[0] = [p[1]]
     else:
-        p[0] = {'type': 'table', 'name': p[1], 'value': p[2]}
-
-def p_assignment(p):
-    """
-        assignment : VAR EQUAL elemento
-    """
-    p[0] = {'type': 'assignment', 'name': p[1], 'value': p[3]}
+        p[0] = [p[1]] + p[2]
 
 def p_name2(p):
     """
@@ -45,9 +62,9 @@ def p_name2(p):
             | DOT elementoVar name2
     """
     if len(p)==3:
-        p[0] = {'type': 'table', 'name': p[2]}
+        p[0] = [p[2]]
     else:
-        p[0] = {'type': 'table', 'name': p[2], 'value': p[3]}
+        p[0] = [p[2]] + p[3]
 
 def p_elemento_var(p):
     """
@@ -63,9 +80,9 @@ def p_lista(p):
             | LEFTSQUAREBRACKET ContList RIGHTSQUAREBRACKET
     """
     if len(p) == 2:
-        p[0] = {'type': 'list', 'value': []}
+        p[0] = []
     else:  
-        p[0] = {'type': 'list', 'value': p[2]} 
+        p[0] = p[2]
 
 def p_conteudo_lista(p):
     """
@@ -93,29 +110,20 @@ def p_object(p):
                 | LEFTBRACKET ContObject RIGHTBRACKET
     """
     if len(p) == 2:
-        p[0] = {'type': 'object', 'value': {}}
+        p[0] = {}
     else:  
-        p[0] = {'type': 'object', 'value': p[2]} 
+        p[0] = p[2] 
 
 def p_conteudo_object(p):
     """
         ContObject : assignment
-                | assignment ContObject2
+                | assignment COMMA ContObject
     """
     if len(p) == 2:
-        p[0] = p[1]
+        p[0] = p[1]['value']
     else: 
-        p[0] = [p[1]] + [p[2]]
-
-def p_conteudo_object2(p):
-    """
-    ContObject2 : COMMA 
-            | COMMA ContObject
-    """
-    if len(p) == 2:
-        p[0] = p[1]
-    else: 
-        p[0] = p[2]
+        obj = p.parser.toml.join_dicts(p[1]['value'],p[3])
+        p[0] = obj
 
 def p_elemento(p):
     """
@@ -135,48 +143,55 @@ def p_string(p):
     """
         string : STRING
     """
-    p[0] = {'type': 'string', 'value': p[1][1:-1]}
+    p[0] =  p[1][1:-1]
 
 def p_number(p):
     """
         number : NUMBER
     """
-    p[0] = {'type': 'number', 'value': int(p[1])}
+    p[0] = int(p[1])
 
 def p_boolean(p):
     """
         boolean : BOOLEAN
     """
-    p[0] = {'type': 'boolean', 'value': bool(p[1])}
+    p[0] = bool(p[1])
 
 def p_date(p):
     """
         date : DATE
     """
-    p[0] = {'type': 'date', 'value': p[1][1:-1]}
+    p[0] = p[1][1:-1]
 
 def p_time(p):
     """
         time : TIME
     """
-    p[0] = {'type': 'time', 'value': p[1][1:-1]}
+    p[0] = p[1][1:-1]
 
 def p_datetime(p):
     """
         datetime : DATETIME
     """
-    p[0] = {'type': 'datetime', 'value': p[1][1:-1]}
+    p[0] = p[1][1:-1]
 
 
-
+def p_error(p):
+    if p:
+        print(f"Sintax error on line {p.lineno}, column {p.lexpos + 1}: "
+              f"unexpected token '{p.value}'")
+    else:
+        print("Syntax error: unexpected end of file")
+        
 # Inicialização do parser
 parser = yacc.yacc()
+
+parser.toml = TOML.TOMLtable()
 
 f = open('./TOML/toml4.toml','r')
 lines = f.readlines()
 
 result = ""
 for line in lines:  
-    result += str(parser.parse(line))
-
-print(result)
+    result = str(parser.parse(line))
+    print(result)

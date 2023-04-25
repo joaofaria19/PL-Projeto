@@ -3,7 +3,8 @@ import ply.lex as lex
 tokens = ('COMMENT', 'COMMA', 'DOT', 'VAR',
           'LEFTBRACKET', 'RIGHTBRACKET', 'LEFTSQUAREBRACKET', 'RIGHTSQUAREBRACKET',
           'EQUAL', 'NUMBER', 'STRING', 'MSTRING', 'BOOLEAN',
-          'DATE', 'TIME', 'DATETIME', 'HEXADECIMAL','BINARY','OCTAL')
+          'DATE', 'TIME', 'DATETIME', 'HEXADECIMAL','BINARY','OCTAL',
+          'EMPTY')
 
 t_COMMENT = r'\#.*'
 t_COMMA = r'\,'
@@ -25,13 +26,16 @@ t_HEXADECIMAL = r'0x[0-9A-Fa-f]([0-9A-Fa-f]|_[0-9A-Fa-f])*'
 t_BINARY = r'0b[01]([01]|_[01])*'
 t_OCTAL = '0o[0-7]([0-7]|_[0-9])*'
 
+t_ignore = ' \t'
+
+def t_EMPTY(t):
+    r'^\s*\n'
+    t.lexer.lineno += 1
+    return t
+
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
-
-
-t_ignore = ' \t'
-
 
 def t_error(t):
     print("Illegal character '%s'" % t.value[0])
