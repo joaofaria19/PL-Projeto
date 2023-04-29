@@ -2,7 +2,7 @@ import ply.lex as lex
 
 tokens = ('COMMENT', 'COMMA', 'DOT', 'VAR',
           'LEFTBRACKET', 'RIGHTBRACKET', 'LEFTSQUAREBRACKET', 'RIGHTSQUAREBRACKET',
-          'EQUAL', 'NUMBER', 'STRING', 'MSTRING', 'BOOLEAN',
+          'EQUAL', 'INT','FLOAT','INF', 'NAN', 'STRING', 'MSTRING', 'BOOLEAN',
           'DATE', 'TIME', 'DATETIME','OFFSET','OFFSETDATETIME', 'HEXADECIMAL','BINARY','OCTAL',
           'EMPTY')
 
@@ -23,7 +23,10 @@ t_TIME = r'\d{2}:\d{2}:\d{2}(\.\d{6})?'
 t_DATETIME = fr'{t_DATE}T{t_TIME}'
 t_OFFSET = r'[+-]\d{2}:\d{2}'
 t_OFFSETDATETIME = fr'{t_DATETIME}{t_OFFSET}'
-t_NUMBER = r'(\+|\-)?(\d+(\.\d+)*((e|E)+(\+|\-)?\d+)*|inf|nan)(?![T\d\-:.])'  # necessário corrigir o number para floats e expoentes
+t_INT = r'[\+\-]?(0|[1-9](\_?[0-9])*)'
+t_FLOAT = r'[\+\-]?(0|[1-9](\_?[0-9])*)(\.[0-9](\_?[0-9])*([eE][\+\-]?[0-9](\_?[0-9])*)?|[eE][\+\-]?[0-9](\_?[0-9])*)'
+t_INF = r'[\+\-]?inf'
+t_NAN = r'[\+\-]?nan'
 t_HEXADECIMAL = r'0x[0-9A-Fa-f]([0-9A-Fa-f]|_[0-9A-Fa-f])*'
 t_BINARY = r'0b[01]([01]|_[01])*'
 t_OCTAL = '0o[0-7]([0-7]|_[0-9])*'
