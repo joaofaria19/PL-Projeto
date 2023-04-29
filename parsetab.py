@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'programBINARY BOOLEAN COMMA COMMENT DATE DATETIME DOT EMPTY EQUAL HEXADECIMAL LEFTBRACKET LEFTSQUAREBRACKET MSTRING NUMBER OCTAL RIGHTBRACKET RIGHTSQUAREBRACKET STRING TIME VAR\n        program : table\n                | assignment\n                | empty\n                | comment\n    \n        comment : COMMENT\n    \n        empty : EMPTY\n    \n        table : LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET\n            | LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET\n    \n        assignment : name EQUAL elemento\n    \n        name : elementoVar\n            | elementoVar name2\n    \n        name2 : DOT elementoVar\n            | DOT elementoVar name2\n    \n        elementoVar : VAR\n                    | STRING\n                    | NUMBER\n    \n        lista : LEFTSQUAREBRACKET RIGHTSQUAREBRACKET\n            | LEFTSQUAREBRACKET ContList RIGHTSQUAREBRACKET\n    \n        ContList : elemento\n                | elemento ContList2\n    \n    ContList2 : COMMA \n            | COMMA ContList\n    \n        object : LEFTBRACKET RIGHTBRACKET\n                | LEFTBRACKET ContObject RIGHTBRACKET\n    \n        ContObject : assignment\n                | assignment COMMA ContObject\n    \n        elemento : \n             | number\n             | string\n             | boolean\n             | date\n             | time\n             | datetime\n             | lista\n             | object\n    \n        string : STRING\n    \n        number : NUMBER\n    \n        boolean : BOOLEAN\n    \n        date : DATE\n    \n        time : TIME\n    \n        datetime : DATETIME\n    '
+_lr_signature = 'programBINARY BOOLEAN COMMA COMMENT DATE DATETIME DOT EQUAL FLOAT HEXADECIMAL INF INT LEFTBRACKET LEFTSQUAREBRACKET MSTRING NAN NEWLINE OCTAL OFFSET OFFSETDATETIME RIGHTBRACKET RIGHTSQUAREBRACKET STRING TIME VAR\n        program : statement\n                | statement program\n    \n        statement : table\n                | assignment\n                | comment\n                | NEWLINE\n    \n        comment : COMMENT NEWLINE\n    \n        table : header1\n            | header2\n    \n        header1 : LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET NEWLINE\n    \n        header2 : LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET NEWLINE\n    \n        assignment : name EQUAL elemento NEWLINE\n    \n        assignment_object : name EQUAL elemento\n    \n        name : elementoVar\n            | elementoVar name2\n    \n        name2 : DOT elementoVar\n            | DOT elementoVar name2\n    \n        elementoVar : VAR\n                    | STRING\n                    | INT\n    \n        lista : LEFTSQUAREBRACKET RIGHTSQUAREBRACKET\n            | LEFTSQUAREBRACKET ContList RIGHTSQUAREBRACKET\n    \n        ContList : elemento\n                | elemento ContList2\n    \n    ContList2 : COMMA \n            | COMMA ContList\n    \n        object : LEFTBRACKET RIGHTBRACKET\n                | LEFTBRACKET ContObject RIGHTBRACKET\n    \n        ContObject : assignment_object\n                | assignment_object COMMA ContObject\n    \n        elemento : \n             | int\n             | float\n             | inf\n             | nan\n             | hexadecimal\n             | binary\n             | octal\n             | string\n             | boolean\n             | date\n             | time\n             | datetime\n             | offset_datetime\n             | lista\n             | object\n    \n        string : STRING\n    \n        int : INT\n    \n        float : FLOAT\n    \n        inf : INF\n    \n        nan : NAN\n    \n        hexadecimal : HEXADECIMAL\n    \n        binary : BINARY\n    \n        octal : OCTAL\n    \n        boolean : BOOLEAN\n    \n        date : DATE\n    \n        time : TIME\n    \n        datetime : DATETIME\n    \n        offset_datetime : OFFSETDATETIME\n    '
     
-_lr_action_items = {'LEFTSQUAREBRACKET':([0,6,16,36,50,],[6,14,36,36,36,]),'EMPTY':([0,],[8,]),'COMMENT':([0,],[9,]),'VAR':([0,6,14,18,37,52,],[11,11,11,11,11,11,]),'STRING':([0,6,14,16,18,36,37,50,52,],[12,12,12,31,12,31,12,31,12,]),'NUMBER':([0,6,14,16,18,36,37,50,52,],[13,13,13,30,13,30,13,30,13,]),'$end':([1,2,3,4,5,8,9,16,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,40,43,47,48,51,],[0,-1,-2,-3,-4,-6,-5,-27,-7,-9,-28,-29,-30,-31,-32,-33,-34,-35,-37,-36,-38,-39,-40,-41,-17,-23,-8,-18,-24,]),'EQUAL':([7,10,11,12,13,17,38,46,],[16,-10,-14,-15,-16,-11,-12,-13,]),'RIGHTSQUAREBRACKET':([10,11,12,13,15,17,19,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,38,39,40,41,42,43,46,48,49,50,51,53,],[-10,-14,-15,-16,20,-11,39,-28,-29,-30,-31,-32,-33,-34,-35,-37,-36,-38,-39,-40,-41,40,-12,47,-17,48,-19,-23,-13,-18,-20,-21,-24,-22,]),'DOT':([10,11,12,13,38,],[18,-14,-15,-16,18,]),'COMMA':([16,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,40,42,43,45,48,50,51,],[-27,-9,-28,-29,-30,-31,-32,-33,-34,-35,-37,-36,-38,-39,-40,-41,-27,-17,50,-23,52,-18,-27,-24,]),'RIGHTBRACKET':([16,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,37,40,43,44,45,48,51,54,],[-27,-9,-28,-29,-30,-31,-32,-33,-34,-35,-37,-36,-38,-39,-40,-41,43,-17,-23,51,-25,-18,-24,-26,]),'BOOLEAN':([16,36,50,],[32,32,32,]),'DATE':([16,36,50,],[33,33,33,]),'TIME':([16,36,50,],[34,34,34,]),'DATETIME':([16,36,50,],[35,35,35,]),'LEFTBRACKET':([16,36,50,],[37,37,37,]),}
+_lr_action_items = {'NEWLINE':([0,2,3,4,5,6,7,8,10,17,18,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,55,57,58,61,66,68,71,74,78,],[6,6,-3,-4,-5,-6,-8,-9,18,-31,-7,57,-32,-33,-34,-35,-36,-37,-38,-39,-40,-41,-42,-43,-44,-45,-46,-48,-49,-50,-51,-52,-53,-54,-47,-55,-56,-57,-58,-59,66,-12,-21,-27,-10,-22,-28,78,-11,]),'COMMENT':([0,2,3,4,5,6,7,8,18,57,66,78,],[10,10,-3,-4,-5,-6,-8,-9,-7,-12,-10,-11,]),'LEFTSQUAREBRACKET':([0,2,3,4,5,6,7,8,11,17,18,52,57,66,70,73,78,],[11,11,-3,-4,-5,-6,-8,-9,19,52,-7,52,-12,-10,52,52,-11,]),'VAR':([0,2,3,4,5,6,7,8,11,18,19,22,53,57,66,72,78,],[13,13,-3,-4,-5,-6,-8,-9,13,-7,13,13,13,-12,-10,13,-11,]),'STRING':([0,2,3,4,5,6,7,8,11,17,18,19,22,52,53,57,66,70,72,73,78,],[14,14,-3,-4,-5,-6,-8,-9,14,46,-7,14,14,46,14,-12,-10,46,14,46,-11,]),'INT':([0,2,3,4,5,6,7,8,11,17,18,19,22,52,53,57,66,70,72,73,78,],[15,15,-3,-4,-5,-6,-8,-9,15,39,-7,15,15,39,15,-12,-10,39,15,39,-11,]),'$end':([1,2,3,4,5,6,7,8,16,18,57,66,78,],[0,-1,-3,-4,-5,-6,-8,-9,-2,-7,-12,-10,-11,]),'EQUAL':([9,12,13,14,15,21,56,64,67,],[17,-14,-18,-19,-20,-15,-16,73,-17,]),'RIGHTSQUAREBRACKET':([12,13,14,15,20,21,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,54,56,58,59,60,61,65,67,68,69,70,71,75,],[-14,-18,-19,-20,55,-15,-32,-33,-34,-35,-36,-37,-38,-39,-40,-41,-42,-43,-44,-45,-46,-48,-49,-50,-51,-52,-53,-54,-47,-55,-56,-57,-58,-59,58,65,-16,-21,68,-23,-27,74,-17,-22,-24,-25,-28,-26,]),'DOT':([12,13,14,15,56,],[22,-18,-19,-20,22,]),'FLOAT':([17,52,70,73,],[40,40,40,40,]),'INF':([17,52,70,73,],[41,41,41,41,]),'NAN':([17,52,70,73,],[42,42,42,42,]),'HEXADECIMAL':([17,52,70,73,],[43,43,43,43,]),'BINARY':([17,52,70,73,],[44,44,44,44,]),'OCTAL':([17,52,70,73,],[45,45,45,45,]),'BOOLEAN':([17,52,70,73,],[47,47,47,47,]),'DATE':([17,52,70,73,],[48,48,48,48,]),'TIME':([17,52,70,73,],[49,49,49,49,]),'DATETIME':([17,52,70,73,],[50,50,50,50,]),'OFFSETDATETIME':([17,52,70,73,],[51,51,51,51,]),'LEFTBRACKET':([17,52,70,73,],[53,53,53,53,]),'COMMA':([24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,58,60,61,63,68,70,71,73,77,],[-32,-33,-34,-35,-36,-37,-38,-39,-40,-41,-42,-43,-44,-45,-46,-48,-49,-50,-51,-52,-53,-54,-47,-55,-56,-57,-58,-59,-31,-21,70,-27,72,-22,-31,-28,-31,-13,]),'RIGHTBRACKET':([24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,53,58,61,62,63,68,71,73,76,77,],[-32,-33,-34,-35,-36,-37,-38,-39,-40,-41,-42,-43,-44,-45,-46,-48,-49,-50,-51,-52,-53,-54,-47,-55,-56,-57,-58,-59,61,-21,-27,71,-29,-22,-28,-31,-30,-13,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'program':([0,],[1,]),'table':([0,],[2,]),'assignment':([0,37,52,],[3,45,45,]),'empty':([0,],[4,]),'comment':([0,],[5,]),'name':([0,6,14,37,52,],[7,15,19,7,7,]),'elementoVar':([0,6,14,18,37,52,],[10,10,10,38,10,10,]),'name2':([10,38,],[17,46,]),'elemento':([16,36,50,],[21,42,42,]),'number':([16,36,50,],[22,22,22,]),'string':([16,36,50,],[23,23,23,]),'boolean':([16,36,50,],[24,24,24,]),'date':([16,36,50,],[25,25,25,]),'time':([16,36,50,],[26,26,26,]),'datetime':([16,36,50,],[27,27,27,]),'lista':([16,36,50,],[28,28,28,]),'object':([16,36,50,],[29,29,29,]),'ContList':([36,50,],[41,53,]),'ContObject':([37,52,],[44,54,]),'ContList2':([42,],[49,]),}
+_lr_goto_items = {'program':([0,2,],[1,16,]),'statement':([0,2,],[2,2,]),'table':([0,2,],[3,3,]),'assignment':([0,2,],[4,4,]),'comment':([0,2,],[5,5,]),'header1':([0,2,],[7,7,]),'header2':([0,2,],[8,8,]),'name':([0,2,11,19,53,72,],[9,9,20,54,64,64,]),'elementoVar':([0,2,11,19,22,53,72,],[12,12,12,12,56,12,12,]),'name2':([12,56,],[21,67,]),'elemento':([17,52,70,73,],[23,60,60,77,]),'int':([17,52,70,73,],[24,24,24,24,]),'float':([17,52,70,73,],[25,25,25,25,]),'inf':([17,52,70,73,],[26,26,26,26,]),'nan':([17,52,70,73,],[27,27,27,27,]),'hexadecimal':([17,52,70,73,],[28,28,28,28,]),'binary':([17,52,70,73,],[29,29,29,29,]),'octal':([17,52,70,73,],[30,30,30,30,]),'string':([17,52,70,73,],[31,31,31,31,]),'boolean':([17,52,70,73,],[32,32,32,32,]),'date':([17,52,70,73,],[33,33,33,33,]),'time':([17,52,70,73,],[34,34,34,34,]),'datetime':([17,52,70,73,],[35,35,35,35,]),'offset_datetime':([17,52,70,73,],[36,36,36,36,]),'lista':([17,52,70,73,],[37,37,37,37,]),'object':([17,52,70,73,],[38,38,38,38,]),'ContList':([52,70,],[59,75,]),'ContObject':([53,72,],[62,76,]),'assignment_object':([53,72,],[63,63,]),'ContList2':([60,],[69,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,45 +27,63 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> program","S'",1,None,None,None),
-  ('program -> table','program',1,'p_program','analisador_sintatico.py',12),
-  ('program -> assignment','program',1,'p_program','analisador_sintatico.py',13),
-  ('program -> empty','program',1,'p_program','analisador_sintatico.py',14),
-  ('program -> comment','program',1,'p_program','analisador_sintatico.py',15),
-  ('comment -> COMMENT','comment',1,'p_comment','analisador_sintatico.py',22),
-  ('empty -> EMPTY','empty',1,'p_empty','analisador_sintatico.py',29),
-  ('table -> LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET','table',3,'p_table','analisador_sintatico.py',35),
-  ('table -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET','table',5,'p_table','analisador_sintatico.py',36),
-  ('assignment -> name EQUAL elemento','assignment',3,'p_assignment','analisador_sintatico.py',45),
-  ('name -> elementoVar','name',1,'p_name','analisador_sintatico.py',51),
-  ('name -> elementoVar name2','name',2,'p_name','analisador_sintatico.py',52),
-  ('name2 -> DOT elementoVar','name2',2,'p_name2','analisador_sintatico.py',61),
-  ('name2 -> DOT elementoVar name2','name2',3,'p_name2','analisador_sintatico.py',62),
-  ('elementoVar -> VAR','elementoVar',1,'p_elemento_var','analisador_sintatico.py',71),
-  ('elementoVar -> STRING','elementoVar',1,'p_elemento_var','analisador_sintatico.py',72),
-  ('elementoVar -> NUMBER','elementoVar',1,'p_elemento_var','analisador_sintatico.py',73),
-  ('lista -> LEFTSQUAREBRACKET RIGHTSQUAREBRACKET','lista',2,'p_lista','analisador_sintatico.py',79),
-  ('lista -> LEFTSQUAREBRACKET ContList RIGHTSQUAREBRACKET','lista',3,'p_lista','analisador_sintatico.py',80),
-  ('ContList -> elemento','ContList',1,'p_conteudo_lista','analisador_sintatico.py',89),
-  ('ContList -> elemento ContList2','ContList',2,'p_conteudo_lista','analisador_sintatico.py',90),
-  ('ContList2 -> COMMA','ContList2',1,'p_conteudo_lista2','analisador_sintatico.py',99),
-  ('ContList2 -> COMMA ContList','ContList2',2,'p_conteudo_lista2','analisador_sintatico.py',100),
-  ('object -> LEFTBRACKET RIGHTBRACKET','object',2,'p_object','analisador_sintatico.py',109),
-  ('object -> LEFTBRACKET ContObject RIGHTBRACKET','object',3,'p_object','analisador_sintatico.py',110),
-  ('ContObject -> assignment','ContObject',1,'p_conteudo_object','analisador_sintatico.py',119),
-  ('ContObject -> assignment COMMA ContObject','ContObject',3,'p_conteudo_object','analisador_sintatico.py',120),
-  ('elemento -> <empty>','elemento',0,'p_elemento','analisador_sintatico.py',130),
-  ('elemento -> number','elemento',1,'p_elemento','analisador_sintatico.py',131),
-  ('elemento -> string','elemento',1,'p_elemento','analisador_sintatico.py',132),
-  ('elemento -> boolean','elemento',1,'p_elemento','analisador_sintatico.py',133),
-  ('elemento -> date','elemento',1,'p_elemento','analisador_sintatico.py',134),
-  ('elemento -> time','elemento',1,'p_elemento','analisador_sintatico.py',135),
-  ('elemento -> datetime','elemento',1,'p_elemento','analisador_sintatico.py',136),
-  ('elemento -> lista','elemento',1,'p_elemento','analisador_sintatico.py',137),
-  ('elemento -> object','elemento',1,'p_elemento','analisador_sintatico.py',138),
-  ('string -> STRING','string',1,'p_string','analisador_sintatico.py',144),
-  ('number -> NUMBER','number',1,'p_number','analisador_sintatico.py',150),
-  ('boolean -> BOOLEAN','boolean',1,'p_boolean','analisador_sintatico.py',156),
-  ('date -> DATE','date',1,'p_date','analisador_sintatico.py',162),
-  ('time -> TIME','time',1,'p_time','analisador_sintatico.py',168),
-  ('datetime -> DATETIME','datetime',1,'p_datetime','analisador_sintatico.py',174),
+  ('program -> statement','program',1,'p_program','analisador_sintatico.py',24),
+  ('program -> statement program','program',2,'p_program','analisador_sintatico.py',25),
+  ('statement -> table','statement',1,'p_statement','analisador_sintatico.py',60),
+  ('statement -> assignment','statement',1,'p_statement','analisador_sintatico.py',61),
+  ('statement -> comment','statement',1,'p_statement','analisador_sintatico.py',62),
+  ('statement -> NEWLINE','statement',1,'p_statement','analisador_sintatico.py',63),
+  ('comment -> COMMENT NEWLINE','comment',2,'p_comment','analisador_sintatico.py',69),
+  ('table -> header1','table',1,'p_table','analisador_sintatico.py',75),
+  ('table -> header2','table',1,'p_table','analisador_sintatico.py',76),
+  ('header1 -> LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET NEWLINE','header1',4,'p_header1','analisador_sintatico.py',82),
+  ('header2 -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET NEWLINE','header2',6,'p_header2','analisador_sintatico.py',88),
+  ('assignment -> name EQUAL elemento NEWLINE','assignment',4,'p_assignment','analisador_sintatico.py',94),
+  ('assignment_object -> name EQUAL elemento','assignment_object',3,'p_assignment_object','analisador_sintatico.py',101),
+  ('name -> elementoVar','name',1,'p_name','analisador_sintatico.py',107),
+  ('name -> elementoVar name2','name',2,'p_name','analisador_sintatico.py',108),
+  ('name2 -> DOT elementoVar','name2',2,'p_name2','analisador_sintatico.py',117),
+  ('name2 -> DOT elementoVar name2','name2',3,'p_name2','analisador_sintatico.py',118),
+  ('elementoVar -> VAR','elementoVar',1,'p_elemento_var','analisador_sintatico.py',127),
+  ('elementoVar -> STRING','elementoVar',1,'p_elemento_var','analisador_sintatico.py',128),
+  ('elementoVar -> INT','elementoVar',1,'p_elemento_var','analisador_sintatico.py',129),
+  ('lista -> LEFTSQUAREBRACKET RIGHTSQUAREBRACKET','lista',2,'p_lista','analisador_sintatico.py',135),
+  ('lista -> LEFTSQUAREBRACKET ContList RIGHTSQUAREBRACKET','lista',3,'p_lista','analisador_sintatico.py',136),
+  ('ContList -> elemento','ContList',1,'p_conteudo_lista','analisador_sintatico.py',145),
+  ('ContList -> elemento ContList2','ContList',2,'p_conteudo_lista','analisador_sintatico.py',146),
+  ('ContList2 -> COMMA','ContList2',1,'p_conteudo_lista2','analisador_sintatico.py',155),
+  ('ContList2 -> COMMA ContList','ContList2',2,'p_conteudo_lista2','analisador_sintatico.py',156),
+  ('object -> LEFTBRACKET RIGHTBRACKET','object',2,'p_object','analisador_sintatico.py',165),
+  ('object -> LEFTBRACKET ContObject RIGHTBRACKET','object',3,'p_object','analisador_sintatico.py',166),
+  ('ContObject -> assignment_object','ContObject',1,'p_conteudo_object','analisador_sintatico.py',175),
+  ('ContObject -> assignment_object COMMA ContObject','ContObject',3,'p_conteudo_object','analisador_sintatico.py',176),
+  ('elemento -> <empty>','elemento',0,'p_elemento','analisador_sintatico.py',186),
+  ('elemento -> int','elemento',1,'p_elemento','analisador_sintatico.py',187),
+  ('elemento -> float','elemento',1,'p_elemento','analisador_sintatico.py',188),
+  ('elemento -> inf','elemento',1,'p_elemento','analisador_sintatico.py',189),
+  ('elemento -> nan','elemento',1,'p_elemento','analisador_sintatico.py',190),
+  ('elemento -> hexadecimal','elemento',1,'p_elemento','analisador_sintatico.py',191),
+  ('elemento -> binary','elemento',1,'p_elemento','analisador_sintatico.py',192),
+  ('elemento -> octal','elemento',1,'p_elemento','analisador_sintatico.py',193),
+  ('elemento -> string','elemento',1,'p_elemento','analisador_sintatico.py',194),
+  ('elemento -> boolean','elemento',1,'p_elemento','analisador_sintatico.py',195),
+  ('elemento -> date','elemento',1,'p_elemento','analisador_sintatico.py',196),
+  ('elemento -> time','elemento',1,'p_elemento','analisador_sintatico.py',197),
+  ('elemento -> datetime','elemento',1,'p_elemento','analisador_sintatico.py',198),
+  ('elemento -> offset_datetime','elemento',1,'p_elemento','analisador_sintatico.py',199),
+  ('elemento -> lista','elemento',1,'p_elemento','analisador_sintatico.py',200),
+  ('elemento -> object','elemento',1,'p_elemento','analisador_sintatico.py',201),
+  ('string -> STRING','string',1,'p_string','analisador_sintatico.py',207),
+  ('int -> INT','int',1,'p_number','analisador_sintatico.py',213),
+  ('float -> FLOAT','float',1,'p_float','analisador_sintatico.py',219),
+  ('inf -> INF','inf',1,'p_inf','analisador_sintatico.py',225),
+  ('nan -> NAN','nan',1,'p_nan','analisador_sintatico.py',231),
+  ('hexadecimal -> HEXADECIMAL','hexadecimal',1,'p_hexadecimal','analisador_sintatico.py',237),
+  ('binary -> BINARY','binary',1,'p_binary','analisador_sintatico.py',243),
+  ('octal -> OCTAL','octal',1,'p_octal','analisador_sintatico.py',249),
+  ('boolean -> BOOLEAN','boolean',1,'p_boolean','analisador_sintatico.py',256),
+  ('date -> DATE','date',1,'p_date','analisador_sintatico.py',262),
+  ('time -> TIME','time',1,'p_time','analisador_sintatico.py',268),
+  ('datetime -> DATETIME','datetime',1,'p_datetime','analisador_sintatico.py',274),
+  ('offset_datetime -> OFFSETDATETIME','offset_datetime',1,'p_offset_datetime','analisador_sintatico.py',280),
 ]

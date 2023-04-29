@@ -4,7 +4,7 @@ tokens = ('COMMENT', 'COMMA', 'DOT', 'VAR',
           'LEFTBRACKET', 'RIGHTBRACKET', 'LEFTSQUAREBRACKET', 'RIGHTSQUAREBRACKET',
           'EQUAL', 'INT','FLOAT','INF', 'NAN', 'STRING', 'MSTRING', 'BOOLEAN',
           'DATE', 'TIME', 'DATETIME','OFFSET','OFFSETDATETIME', 'HEXADECIMAL','BINARY','OCTAL',
-          'EMPTY')
+          'NEWLINE')
 
 t_COMMENT = r'\#.*'
 t_COMMA = r'\,'
@@ -33,14 +33,10 @@ t_OCTAL = '0o[0-7]([0-7]|_[0-9])*'
 
 t_ignore = ' \t'
 
-def t_EMPTY(t):
-    r'^\s*\n'
+def t_NEWLINE(t):
+    r'\n'
     t.lexer.lineno += 1
     return t
-
-def t_newline(t):
-    r'\n+'
-    t.lexer.lineno += len(t.value)
 
 def t_error(t):
     print("Illegal character '%s'" % t.value[0])

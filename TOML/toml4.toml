@@ -1,17 +1,21 @@
 tittle = "TOML EXAMPLE"
 
 [person]
-name.proprio = "John Doe"
+name.proprio = "John"
+name.secundario = "Doe"
 age.birth = 30
 
+[animal]
+type = "raposa"
+pet_name = "coccy"
+pet_age = 12
+
 [animal.pet]
-#[animal]
 type = "dog"
-name = "Puffy"
-age = 3
+pet_name = "Puffy"
+pet_age = 3
 
 [address.road.California]
-#[address]
 street = "123 Main St"
 city = "Anytown"
 state = "CA"

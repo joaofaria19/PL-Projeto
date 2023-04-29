@@ -2,137 +2,173 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
-    BINARY
-    HEXADECIMAL
     MSTRING
-    OCTAL
+    OFFSET
 
 Grammar
 
 Rule 0     S' -> program
-Rule 1     program -> table
-Rule 2     program -> assignment
-Rule 3     program -> empty
-Rule 4     program -> comment
-Rule 5     comment -> COMMENT
-Rule 6     empty -> EMPTY
-Rule 7     table -> LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET
-Rule 8     table -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET
-Rule 9     assignment -> name EQUAL elemento
-Rule 10    name -> elementoVar
-Rule 11    name -> elementoVar name2
-Rule 12    name2 -> DOT elementoVar
-Rule 13    name2 -> DOT elementoVar name2
-Rule 14    elementoVar -> VAR
-Rule 15    elementoVar -> STRING
-Rule 16    elementoVar -> NUMBER
-Rule 17    lista -> LEFTSQUAREBRACKET RIGHTSQUAREBRACKET
-Rule 18    lista -> LEFTSQUAREBRACKET ContList RIGHTSQUAREBRACKET
-Rule 19    ContList -> elemento
-Rule 20    ContList -> elemento ContList2
-Rule 21    ContList2 -> COMMA
-Rule 22    ContList2 -> COMMA ContList
-Rule 23    object -> LEFTBRACKET RIGHTBRACKET
-Rule 24    object -> LEFTBRACKET ContObject RIGHTBRACKET
-Rule 25    ContObject -> assignment
-Rule 26    ContObject -> assignment COMMA ContObject
-Rule 27    elemento -> <empty>
-Rule 28    elemento -> number
-Rule 29    elemento -> string
-Rule 30    elemento -> boolean
-Rule 31    elemento -> date
-Rule 32    elemento -> time
-Rule 33    elemento -> datetime
-Rule 34    elemento -> lista
-Rule 35    elemento -> object
-Rule 36    string -> STRING
-Rule 37    number -> NUMBER
-Rule 38    boolean -> BOOLEAN
-Rule 39    date -> DATE
-Rule 40    time -> TIME
-Rule 41    datetime -> DATETIME
+Rule 1     program -> statement
+Rule 2     program -> statement program
+Rule 3     statement -> table
+Rule 4     statement -> assignment
+Rule 5     statement -> comment
+Rule 6     statement -> NEWLINE
+Rule 7     comment -> COMMENT NEWLINE
+Rule 8     table -> header1
+Rule 9     table -> header2
+Rule 10    header1 -> LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET NEWLINE
+Rule 11    header2 -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET NEWLINE
+Rule 12    assignment -> name EQUAL elemento NEWLINE
+Rule 13    assignment_object -> name EQUAL elemento
+Rule 14    name -> elementoVar
+Rule 15    name -> elementoVar name2
+Rule 16    name2 -> DOT elementoVar
+Rule 17    name2 -> DOT elementoVar name2
+Rule 18    elementoVar -> VAR
+Rule 19    elementoVar -> STRING
+Rule 20    elementoVar -> INT
+Rule 21    lista -> LEFTSQUAREBRACKET RIGHTSQUAREBRACKET
+Rule 22    lista -> LEFTSQUAREBRACKET ContList RIGHTSQUAREBRACKET
+Rule 23    ContList -> elemento
+Rule 24    ContList -> elemento ContList2
+Rule 25    ContList2 -> COMMA
+Rule 26    ContList2 -> COMMA ContList
+Rule 27    object -> LEFTBRACKET RIGHTBRACKET
+Rule 28    object -> LEFTBRACKET ContObject RIGHTBRACKET
+Rule 29    ContObject -> assignment_object
+Rule 30    ContObject -> assignment_object COMMA ContObject
+Rule 31    elemento -> <empty>
+Rule 32    elemento -> int
+Rule 33    elemento -> float
+Rule 34    elemento -> inf
+Rule 35    elemento -> nan
+Rule 36    elemento -> hexadecimal
+Rule 37    elemento -> binary
+Rule 38    elemento -> octal
+Rule 39    elemento -> string
+Rule 40    elemento -> boolean
+Rule 41    elemento -> date
+Rule 42    elemento -> time
+Rule 43    elemento -> datetime
+Rule 44    elemento -> offset_datetime
+Rule 45    elemento -> lista
+Rule 46    elemento -> object
+Rule 47    string -> STRING
+Rule 48    int -> INT
+Rule 49    float -> FLOAT
+Rule 50    inf -> INF
+Rule 51    nan -> NAN
+Rule 52    hexadecimal -> HEXADECIMAL
+Rule 53    binary -> BINARY
+Rule 54    octal -> OCTAL
+Rule 55    boolean -> BOOLEAN
+Rule 56    date -> DATE
+Rule 57    time -> TIME
+Rule 58    datetime -> DATETIME
+Rule 59    offset_datetime -> OFFSETDATETIME
 
 Terminals, with rules where they appear
 
-BINARY               : 
-BOOLEAN              : 38
-COMMA                : 21 22 26
-COMMENT              : 5
-DATE                 : 39
-DATETIME             : 41
-DOT                  : 12 13
-EMPTY                : 6
-EQUAL                : 9
-HEXADECIMAL          : 
-LEFTBRACKET          : 23 24
-LEFTSQUAREBRACKET    : 7 8 8 17 18
+BINARY               : 53
+BOOLEAN              : 55
+COMMA                : 25 26 30
+COMMENT              : 7
+DATE                 : 56
+DATETIME             : 58
+DOT                  : 16 17
+EQUAL                : 12 13
+FLOAT                : 49
+HEXADECIMAL          : 52
+INF                  : 50
+INT                  : 20 48
+LEFTBRACKET          : 27 28
+LEFTSQUAREBRACKET    : 10 11 11 21 22
 MSTRING              : 
-NUMBER               : 16 37
-OCTAL                : 
-RIGHTBRACKET         : 23 24
-RIGHTSQUAREBRACKET   : 7 8 8 17 18
-STRING               : 15 36
-TIME                 : 40
-VAR                  : 14
+NAN                  : 51
+NEWLINE              : 6 7 10 11 12
+OCTAL                : 54
+OFFSET               : 
+OFFSETDATETIME       : 59
+RIGHTBRACKET         : 27 28
+RIGHTSQUAREBRACKET   : 10 11 11 21 22
+STRING               : 19 47
+TIME                 : 57
+VAR                  : 18
 error                : 
 
 Nonterminals, with rules where they appear
 
-ContList             : 18 22
-ContList2            : 20
-ContObject           : 24 26
-assignment           : 2 25 26
-boolean              : 30
-comment              : 4
-date                 : 31
-datetime             : 33
-elemento             : 9 19 20
-elementoVar          : 10 11 12 13
-empty                : 3
-lista                : 34
-name                 : 7 8 9
-name2                : 11 13
-number               : 28
-object               : 35
-program              : 0
-string               : 29
-table                : 1
-time                 : 32
+ContList             : 22 26
+ContList2            : 24
+ContObject           : 28 30
+assignment           : 4
+assignment_object    : 29 30
+binary               : 37
+boolean              : 40
+comment              : 5
+date                 : 41
+datetime             : 43
+elemento             : 12 13 23 24
+elementoVar          : 14 15 16 17
+float                : 33
+header1              : 8
+header2              : 9
+hexadecimal          : 36
+inf                  : 34
+int                  : 32
+lista                : 45
+name                 : 10 11 12 13
+name2                : 15 17
+nan                  : 35
+object               : 46
+octal                : 38
+offset_datetime      : 44
+program              : 2 0
+statement            : 1 2
+string               : 39
+table                : 3
+time                 : 42
 
 Parsing method: LALR
 
 state 0
 
     (0) S' -> . program
-    (1) program -> . table
-    (2) program -> . assignment
-    (3) program -> . empty
-    (4) program -> . comment
-    (7) table -> . LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET
-    (8) table -> . LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET
-    (9) assignment -> . name EQUAL elemento
-    (6) empty -> . EMPTY
-    (5) comment -> . COMMENT
-    (10) name -> . elementoVar
-    (11) name -> . elementoVar name2
-    (14) elementoVar -> . VAR
-    (15) elementoVar -> . STRING
-    (16) elementoVar -> . NUMBER
+    (1) program -> . statement
+    (2) program -> . statement program
+    (3) statement -> . table
+    (4) statement -> . assignment
+    (5) statement -> . comment
+    (6) statement -> . NEWLINE
+    (8) table -> . header1
+    (9) table -> . header2
+    (12) assignment -> . name EQUAL elemento NEWLINE
+    (7) comment -> . COMMENT NEWLINE
+    (10) header1 -> . LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET NEWLINE
+    (11) header2 -> . LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET NEWLINE
+    (14) name -> . elementoVar
+    (15) name -> . elementoVar name2
+    (18) elementoVar -> . VAR
+    (19) elementoVar -> . STRING
+    (20) elementoVar -> . INT
 
-    LEFTSQUAREBRACKET shift and go to state 6
-    EMPTY           shift and go to state 8
-    COMMENT         shift and go to state 9
-    VAR             shift and go to state 11
-    STRING          shift and go to state 12
-    NUMBER          shift and go to state 13
+    NEWLINE         shift and go to state 6
+    COMMENT         shift and go to state 10
+    LEFTSQUAREBRACKET shift and go to state 11
+    VAR             shift and go to state 13
+    STRING          shift and go to state 14
+    INT             shift and go to state 15
 
     program                        shift and go to state 1
-    table                          shift and go to state 2
-    assignment                     shift and go to state 3
-    empty                          shift and go to state 4
+    statement                      shift and go to state 2
+    table                          shift and go to state 3
+    assignment                     shift and go to state 4
     comment                        shift and go to state 5
-    name                           shift and go to state 7
-    elementoVar                    shift and go to state 10
+    header1                        shift and go to state 7
+    header2                        shift and go to state 8
+    name                           shift and go to state 9
+    elementoVar                    shift and go to state 12
 
 state 1
 
@@ -142,643 +178,1092 @@ state 1
 
 state 2
 
-    (1) program -> table .
+    (1) program -> statement .
+    (2) program -> statement . program
+    (1) program -> . statement
+    (2) program -> . statement program
+    (3) statement -> . table
+    (4) statement -> . assignment
+    (5) statement -> . comment
+    (6) statement -> . NEWLINE
+    (8) table -> . header1
+    (9) table -> . header2
+    (12) assignment -> . name EQUAL elemento NEWLINE
+    (7) comment -> . COMMENT NEWLINE
+    (10) header1 -> . LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET NEWLINE
+    (11) header2 -> . LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET NEWLINE
+    (14) name -> . elementoVar
+    (15) name -> . elementoVar name2
+    (18) elementoVar -> . VAR
+    (19) elementoVar -> . STRING
+    (20) elementoVar -> . INT
 
-    $end            reduce using rule 1 (program -> table .)
+    $end            reduce using rule 1 (program -> statement .)
+    NEWLINE         shift and go to state 6
+    COMMENT         shift and go to state 10
+    LEFTSQUAREBRACKET shift and go to state 11
+    VAR             shift and go to state 13
+    STRING          shift and go to state 14
+    INT             shift and go to state 15
 
+    statement                      shift and go to state 2
+    program                        shift and go to state 16
+    table                          shift and go to state 3
+    assignment                     shift and go to state 4
+    comment                        shift and go to state 5
+    header1                        shift and go to state 7
+    header2                        shift and go to state 8
+    name                           shift and go to state 9
+    elementoVar                    shift and go to state 12
 
 state 3
 
-    (2) program -> assignment .
+    (3) statement -> table .
 
-    $end            reduce using rule 2 (program -> assignment .)
+    NEWLINE         reduce using rule 3 (statement -> table .)
+    COMMENT         reduce using rule 3 (statement -> table .)
+    LEFTSQUAREBRACKET reduce using rule 3 (statement -> table .)
+    VAR             reduce using rule 3 (statement -> table .)
+    STRING          reduce using rule 3 (statement -> table .)
+    INT             reduce using rule 3 (statement -> table .)
+    $end            reduce using rule 3 (statement -> table .)
 
 
 state 4
 
-    (3) program -> empty .
+    (4) statement -> assignment .
 
-    $end            reduce using rule 3 (program -> empty .)
+    NEWLINE         reduce using rule 4 (statement -> assignment .)
+    COMMENT         reduce using rule 4 (statement -> assignment .)
+    LEFTSQUAREBRACKET reduce using rule 4 (statement -> assignment .)
+    VAR             reduce using rule 4 (statement -> assignment .)
+    STRING          reduce using rule 4 (statement -> assignment .)
+    INT             reduce using rule 4 (statement -> assignment .)
+    $end            reduce using rule 4 (statement -> assignment .)
 
 
 state 5
 
-    (4) program -> comment .
+    (5) statement -> comment .
 
-    $end            reduce using rule 4 (program -> comment .)
+    NEWLINE         reduce using rule 5 (statement -> comment .)
+    COMMENT         reduce using rule 5 (statement -> comment .)
+    LEFTSQUAREBRACKET reduce using rule 5 (statement -> comment .)
+    VAR             reduce using rule 5 (statement -> comment .)
+    STRING          reduce using rule 5 (statement -> comment .)
+    INT             reduce using rule 5 (statement -> comment .)
+    $end            reduce using rule 5 (statement -> comment .)
 
 
 state 6
 
-    (7) table -> LEFTSQUAREBRACKET . name RIGHTSQUAREBRACKET
-    (8) table -> LEFTSQUAREBRACKET . LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET
-    (10) name -> . elementoVar
-    (11) name -> . elementoVar name2
-    (14) elementoVar -> . VAR
-    (15) elementoVar -> . STRING
-    (16) elementoVar -> . NUMBER
+    (6) statement -> NEWLINE .
 
-    LEFTSQUAREBRACKET shift and go to state 14
-    VAR             shift and go to state 11
-    STRING          shift and go to state 12
-    NUMBER          shift and go to state 13
+    NEWLINE         reduce using rule 6 (statement -> NEWLINE .)
+    COMMENT         reduce using rule 6 (statement -> NEWLINE .)
+    LEFTSQUAREBRACKET reduce using rule 6 (statement -> NEWLINE .)
+    VAR             reduce using rule 6 (statement -> NEWLINE .)
+    STRING          reduce using rule 6 (statement -> NEWLINE .)
+    INT             reduce using rule 6 (statement -> NEWLINE .)
+    $end            reduce using rule 6 (statement -> NEWLINE .)
 
-    name                           shift and go to state 15
-    elementoVar                    shift and go to state 10
 
 state 7
 
-    (9) assignment -> name . EQUAL elemento
+    (8) table -> header1 .
 
-    EQUAL           shift and go to state 16
+    NEWLINE         reduce using rule 8 (table -> header1 .)
+    COMMENT         reduce using rule 8 (table -> header1 .)
+    LEFTSQUAREBRACKET reduce using rule 8 (table -> header1 .)
+    VAR             reduce using rule 8 (table -> header1 .)
+    STRING          reduce using rule 8 (table -> header1 .)
+    INT             reduce using rule 8 (table -> header1 .)
+    $end            reduce using rule 8 (table -> header1 .)
 
 
 state 8
 
-    (6) empty -> EMPTY .
+    (9) table -> header2 .
 
-    $end            reduce using rule 6 (empty -> EMPTY .)
+    NEWLINE         reduce using rule 9 (table -> header2 .)
+    COMMENT         reduce using rule 9 (table -> header2 .)
+    LEFTSQUAREBRACKET reduce using rule 9 (table -> header2 .)
+    VAR             reduce using rule 9 (table -> header2 .)
+    STRING          reduce using rule 9 (table -> header2 .)
+    INT             reduce using rule 9 (table -> header2 .)
+    $end            reduce using rule 9 (table -> header2 .)
 
 
 state 9
 
-    (5) comment -> COMMENT .
+    (12) assignment -> name . EQUAL elemento NEWLINE
 
-    $end            reduce using rule 5 (comment -> COMMENT .)
+    EQUAL           shift and go to state 17
 
 
 state 10
 
-    (10) name -> elementoVar .
-    (11) name -> elementoVar . name2
-    (12) name2 -> . DOT elementoVar
-    (13) name2 -> . DOT elementoVar name2
+    (7) comment -> COMMENT . NEWLINE
 
-    EQUAL           reduce using rule 10 (name -> elementoVar .)
-    RIGHTSQUAREBRACKET reduce using rule 10 (name -> elementoVar .)
-    DOT             shift and go to state 18
+    NEWLINE         shift and go to state 18
 
-    name2                          shift and go to state 17
 
 state 11
 
-    (14) elementoVar -> VAR .
+    (10) header1 -> LEFTSQUAREBRACKET . name RIGHTSQUAREBRACKET NEWLINE
+    (11) header2 -> LEFTSQUAREBRACKET . LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET NEWLINE
+    (14) name -> . elementoVar
+    (15) name -> . elementoVar name2
+    (18) elementoVar -> . VAR
+    (19) elementoVar -> . STRING
+    (20) elementoVar -> . INT
 
-    DOT             reduce using rule 14 (elementoVar -> VAR .)
-    EQUAL           reduce using rule 14 (elementoVar -> VAR .)
-    RIGHTSQUAREBRACKET reduce using rule 14 (elementoVar -> VAR .)
+    LEFTSQUAREBRACKET shift and go to state 19
+    VAR             shift and go to state 13
+    STRING          shift and go to state 14
+    INT             shift and go to state 15
 
+    name                           shift and go to state 20
+    elementoVar                    shift and go to state 12
 
 state 12
 
-    (15) elementoVar -> STRING .
+    (14) name -> elementoVar .
+    (15) name -> elementoVar . name2
+    (16) name2 -> . DOT elementoVar
+    (17) name2 -> . DOT elementoVar name2
 
-    DOT             reduce using rule 15 (elementoVar -> STRING .)
-    EQUAL           reduce using rule 15 (elementoVar -> STRING .)
-    RIGHTSQUAREBRACKET reduce using rule 15 (elementoVar -> STRING .)
+    EQUAL           reduce using rule 14 (name -> elementoVar .)
+    RIGHTSQUAREBRACKET reduce using rule 14 (name -> elementoVar .)
+    DOT             shift and go to state 22
 
+    name2                          shift and go to state 21
 
 state 13
 
-    (16) elementoVar -> NUMBER .
+    (18) elementoVar -> VAR .
 
-    DOT             reduce using rule 16 (elementoVar -> NUMBER .)
-    EQUAL           reduce using rule 16 (elementoVar -> NUMBER .)
-    RIGHTSQUAREBRACKET reduce using rule 16 (elementoVar -> NUMBER .)
+    DOT             reduce using rule 18 (elementoVar -> VAR .)
+    EQUAL           reduce using rule 18 (elementoVar -> VAR .)
+    RIGHTSQUAREBRACKET reduce using rule 18 (elementoVar -> VAR .)
 
 
 state 14
 
-    (8) table -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET . name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET
-    (10) name -> . elementoVar
-    (11) name -> . elementoVar name2
-    (14) elementoVar -> . VAR
-    (15) elementoVar -> . STRING
-    (16) elementoVar -> . NUMBER
+    (19) elementoVar -> STRING .
 
-    VAR             shift and go to state 11
-    STRING          shift and go to state 12
-    NUMBER          shift and go to state 13
+    DOT             reduce using rule 19 (elementoVar -> STRING .)
+    EQUAL           reduce using rule 19 (elementoVar -> STRING .)
+    RIGHTSQUAREBRACKET reduce using rule 19 (elementoVar -> STRING .)
 
-    name                           shift and go to state 19
-    elementoVar                    shift and go to state 10
 
 state 15
 
-    (7) table -> LEFTSQUAREBRACKET name . RIGHTSQUAREBRACKET
+    (20) elementoVar -> INT .
 
-    RIGHTSQUAREBRACKET shift and go to state 20
+    DOT             reduce using rule 20 (elementoVar -> INT .)
+    EQUAL           reduce using rule 20 (elementoVar -> INT .)
+    RIGHTSQUAREBRACKET reduce using rule 20 (elementoVar -> INT .)
 
 
 state 16
 
-    (9) assignment -> name EQUAL . elemento
-    (27) elemento -> .
-    (28) elemento -> . number
-    (29) elemento -> . string
-    (30) elemento -> . boolean
-    (31) elemento -> . date
-    (32) elemento -> . time
-    (33) elemento -> . datetime
-    (34) elemento -> . lista
-    (35) elemento -> . object
-    (37) number -> . NUMBER
-    (36) string -> . STRING
-    (38) boolean -> . BOOLEAN
-    (39) date -> . DATE
-    (40) time -> . TIME
-    (41) datetime -> . DATETIME
-    (17) lista -> . LEFTSQUAREBRACKET RIGHTSQUAREBRACKET
-    (18) lista -> . LEFTSQUAREBRACKET ContList RIGHTSQUAREBRACKET
-    (23) object -> . LEFTBRACKET RIGHTBRACKET
-    (24) object -> . LEFTBRACKET ContObject RIGHTBRACKET
+    (2) program -> statement program .
 
-    $end            reduce using rule 27 (elemento -> .)
-    COMMA           reduce using rule 27 (elemento -> .)
-    RIGHTBRACKET    reduce using rule 27 (elemento -> .)
-    NUMBER          shift and go to state 30
-    STRING          shift and go to state 31
-    BOOLEAN         shift and go to state 32
-    DATE            shift and go to state 33
-    TIME            shift and go to state 34
-    DATETIME        shift and go to state 35
-    LEFTSQUAREBRACKET shift and go to state 36
-    LEFTBRACKET     shift and go to state 37
+    $end            reduce using rule 2 (program -> statement program .)
 
-    elemento                       shift and go to state 21
-    number                         shift and go to state 22
-    string                         shift and go to state 23
-    boolean                        shift and go to state 24
-    date                           shift and go to state 25
-    time                           shift and go to state 26
-    datetime                       shift and go to state 27
-    lista                          shift and go to state 28
-    object                         shift and go to state 29
 
 state 17
 
-    (11) name -> elementoVar name2 .
+    (12) assignment -> name EQUAL . elemento NEWLINE
+    (31) elemento -> .
+    (32) elemento -> . int
+    (33) elemento -> . float
+    (34) elemento -> . inf
+    (35) elemento -> . nan
+    (36) elemento -> . hexadecimal
+    (37) elemento -> . binary
+    (38) elemento -> . octal
+    (39) elemento -> . string
+    (40) elemento -> . boolean
+    (41) elemento -> . date
+    (42) elemento -> . time
+    (43) elemento -> . datetime
+    (44) elemento -> . offset_datetime
+    (45) elemento -> . lista
+    (46) elemento -> . object
+    (48) int -> . INT
+    (49) float -> . FLOAT
+    (50) inf -> . INF
+    (51) nan -> . NAN
+    (52) hexadecimal -> . HEXADECIMAL
+    (53) binary -> . BINARY
+    (54) octal -> . OCTAL
+    (47) string -> . STRING
+    (55) boolean -> . BOOLEAN
+    (56) date -> . DATE
+    (57) time -> . TIME
+    (58) datetime -> . DATETIME
+    (59) offset_datetime -> . OFFSETDATETIME
+    (21) lista -> . LEFTSQUAREBRACKET RIGHTSQUAREBRACKET
+    (22) lista -> . LEFTSQUAREBRACKET ContList RIGHTSQUAREBRACKET
+    (27) object -> . LEFTBRACKET RIGHTBRACKET
+    (28) object -> . LEFTBRACKET ContObject RIGHTBRACKET
 
-    EQUAL           reduce using rule 11 (name -> elementoVar name2 .)
-    RIGHTSQUAREBRACKET reduce using rule 11 (name -> elementoVar name2 .)
+    NEWLINE         reduce using rule 31 (elemento -> .)
+    INT             shift and go to state 39
+    FLOAT           shift and go to state 40
+    INF             shift and go to state 41
+    NAN             shift and go to state 42
+    HEXADECIMAL     shift and go to state 43
+    BINARY          shift and go to state 44
+    OCTAL           shift and go to state 45
+    STRING          shift and go to state 46
+    BOOLEAN         shift and go to state 47
+    DATE            shift and go to state 48
+    TIME            shift and go to state 49
+    DATETIME        shift and go to state 50
+    OFFSETDATETIME  shift and go to state 51
+    LEFTSQUAREBRACKET shift and go to state 52
+    LEFTBRACKET     shift and go to state 53
 
+    elemento                       shift and go to state 23
+    int                            shift and go to state 24
+    float                          shift and go to state 25
+    inf                            shift and go to state 26
+    nan                            shift and go to state 27
+    hexadecimal                    shift and go to state 28
+    binary                         shift and go to state 29
+    octal                          shift and go to state 30
+    string                         shift and go to state 31
+    boolean                        shift and go to state 32
+    date                           shift and go to state 33
+    time                           shift and go to state 34
+    datetime                       shift and go to state 35
+    offset_datetime                shift and go to state 36
+    lista                          shift and go to state 37
+    object                         shift and go to state 38
 
 state 18
 
-    (12) name2 -> DOT . elementoVar
-    (13) name2 -> DOT . elementoVar name2
-    (14) elementoVar -> . VAR
-    (15) elementoVar -> . STRING
-    (16) elementoVar -> . NUMBER
+    (7) comment -> COMMENT NEWLINE .
 
-    VAR             shift and go to state 11
-    STRING          shift and go to state 12
-    NUMBER          shift and go to state 13
+    NEWLINE         reduce using rule 7 (comment -> COMMENT NEWLINE .)
+    COMMENT         reduce using rule 7 (comment -> COMMENT NEWLINE .)
+    LEFTSQUAREBRACKET reduce using rule 7 (comment -> COMMENT NEWLINE .)
+    VAR             reduce using rule 7 (comment -> COMMENT NEWLINE .)
+    STRING          reduce using rule 7 (comment -> COMMENT NEWLINE .)
+    INT             reduce using rule 7 (comment -> COMMENT NEWLINE .)
+    $end            reduce using rule 7 (comment -> COMMENT NEWLINE .)
 
-    elementoVar                    shift and go to state 38
 
 state 19
 
-    (8) table -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET name . RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET
+    (11) header2 -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET . name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET NEWLINE
+    (14) name -> . elementoVar
+    (15) name -> . elementoVar name2
+    (18) elementoVar -> . VAR
+    (19) elementoVar -> . STRING
+    (20) elementoVar -> . INT
 
-    RIGHTSQUAREBRACKET shift and go to state 39
+    VAR             shift and go to state 13
+    STRING          shift and go to state 14
+    INT             shift and go to state 15
 
+    name                           shift and go to state 54
+    elementoVar                    shift and go to state 12
 
 state 20
 
-    (7) table -> LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET .
+    (10) header1 -> LEFTSQUAREBRACKET name . RIGHTSQUAREBRACKET NEWLINE
 
-    $end            reduce using rule 7 (table -> LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET .)
+    RIGHTSQUAREBRACKET shift and go to state 55
 
 
 state 21
 
-    (9) assignment -> name EQUAL elemento .
+    (15) name -> elementoVar name2 .
 
-    $end            reduce using rule 9 (assignment -> name EQUAL elemento .)
-    COMMA           reduce using rule 9 (assignment -> name EQUAL elemento .)
-    RIGHTBRACKET    reduce using rule 9 (assignment -> name EQUAL elemento .)
+    EQUAL           reduce using rule 15 (name -> elementoVar name2 .)
+    RIGHTSQUAREBRACKET reduce using rule 15 (name -> elementoVar name2 .)
 
 
 state 22
 
-    (28) elemento -> number .
+    (16) name2 -> DOT . elementoVar
+    (17) name2 -> DOT . elementoVar name2
+    (18) elementoVar -> . VAR
+    (19) elementoVar -> . STRING
+    (20) elementoVar -> . INT
 
-    $end            reduce using rule 28 (elemento -> number .)
-    COMMA           reduce using rule 28 (elemento -> number .)
-    RIGHTBRACKET    reduce using rule 28 (elemento -> number .)
-    RIGHTSQUAREBRACKET reduce using rule 28 (elemento -> number .)
+    VAR             shift and go to state 13
+    STRING          shift and go to state 14
+    INT             shift and go to state 15
 
+    elementoVar                    shift and go to state 56
 
 state 23
 
-    (29) elemento -> string .
+    (12) assignment -> name EQUAL elemento . NEWLINE
 
-    $end            reduce using rule 29 (elemento -> string .)
-    COMMA           reduce using rule 29 (elemento -> string .)
-    RIGHTBRACKET    reduce using rule 29 (elemento -> string .)
-    RIGHTSQUAREBRACKET reduce using rule 29 (elemento -> string .)
+    NEWLINE         shift and go to state 57
 
 
 state 24
 
-    (30) elemento -> boolean .
+    (32) elemento -> int .
 
-    $end            reduce using rule 30 (elemento -> boolean .)
-    COMMA           reduce using rule 30 (elemento -> boolean .)
-    RIGHTBRACKET    reduce using rule 30 (elemento -> boolean .)
-    RIGHTSQUAREBRACKET reduce using rule 30 (elemento -> boolean .)
+    NEWLINE         reduce using rule 32 (elemento -> int .)
+    COMMA           reduce using rule 32 (elemento -> int .)
+    RIGHTSQUAREBRACKET reduce using rule 32 (elemento -> int .)
+    RIGHTBRACKET    reduce using rule 32 (elemento -> int .)
 
 
 state 25
 
-    (31) elemento -> date .
+    (33) elemento -> float .
 
-    $end            reduce using rule 31 (elemento -> date .)
-    COMMA           reduce using rule 31 (elemento -> date .)
-    RIGHTBRACKET    reduce using rule 31 (elemento -> date .)
-    RIGHTSQUAREBRACKET reduce using rule 31 (elemento -> date .)
+    NEWLINE         reduce using rule 33 (elemento -> float .)
+    COMMA           reduce using rule 33 (elemento -> float .)
+    RIGHTSQUAREBRACKET reduce using rule 33 (elemento -> float .)
+    RIGHTBRACKET    reduce using rule 33 (elemento -> float .)
 
 
 state 26
 
-    (32) elemento -> time .
+    (34) elemento -> inf .
 
-    $end            reduce using rule 32 (elemento -> time .)
-    COMMA           reduce using rule 32 (elemento -> time .)
-    RIGHTBRACKET    reduce using rule 32 (elemento -> time .)
-    RIGHTSQUAREBRACKET reduce using rule 32 (elemento -> time .)
+    NEWLINE         reduce using rule 34 (elemento -> inf .)
+    COMMA           reduce using rule 34 (elemento -> inf .)
+    RIGHTSQUAREBRACKET reduce using rule 34 (elemento -> inf .)
+    RIGHTBRACKET    reduce using rule 34 (elemento -> inf .)
 
 
 state 27
 
-    (33) elemento -> datetime .
+    (35) elemento -> nan .
 
-    $end            reduce using rule 33 (elemento -> datetime .)
-    COMMA           reduce using rule 33 (elemento -> datetime .)
-    RIGHTBRACKET    reduce using rule 33 (elemento -> datetime .)
-    RIGHTSQUAREBRACKET reduce using rule 33 (elemento -> datetime .)
+    NEWLINE         reduce using rule 35 (elemento -> nan .)
+    COMMA           reduce using rule 35 (elemento -> nan .)
+    RIGHTSQUAREBRACKET reduce using rule 35 (elemento -> nan .)
+    RIGHTBRACKET    reduce using rule 35 (elemento -> nan .)
 
 
 state 28
 
-    (34) elemento -> lista .
+    (36) elemento -> hexadecimal .
 
-    $end            reduce using rule 34 (elemento -> lista .)
-    COMMA           reduce using rule 34 (elemento -> lista .)
-    RIGHTBRACKET    reduce using rule 34 (elemento -> lista .)
-    RIGHTSQUAREBRACKET reduce using rule 34 (elemento -> lista .)
+    NEWLINE         reduce using rule 36 (elemento -> hexadecimal .)
+    COMMA           reduce using rule 36 (elemento -> hexadecimal .)
+    RIGHTSQUAREBRACKET reduce using rule 36 (elemento -> hexadecimal .)
+    RIGHTBRACKET    reduce using rule 36 (elemento -> hexadecimal .)
 
 
 state 29
 
-    (35) elemento -> object .
+    (37) elemento -> binary .
 
-    $end            reduce using rule 35 (elemento -> object .)
-    COMMA           reduce using rule 35 (elemento -> object .)
-    RIGHTBRACKET    reduce using rule 35 (elemento -> object .)
-    RIGHTSQUAREBRACKET reduce using rule 35 (elemento -> object .)
+    NEWLINE         reduce using rule 37 (elemento -> binary .)
+    COMMA           reduce using rule 37 (elemento -> binary .)
+    RIGHTSQUAREBRACKET reduce using rule 37 (elemento -> binary .)
+    RIGHTBRACKET    reduce using rule 37 (elemento -> binary .)
 
 
 state 30
 
-    (37) number -> NUMBER .
+    (38) elemento -> octal .
 
-    $end            reduce using rule 37 (number -> NUMBER .)
-    COMMA           reduce using rule 37 (number -> NUMBER .)
-    RIGHTBRACKET    reduce using rule 37 (number -> NUMBER .)
-    RIGHTSQUAREBRACKET reduce using rule 37 (number -> NUMBER .)
+    NEWLINE         reduce using rule 38 (elemento -> octal .)
+    COMMA           reduce using rule 38 (elemento -> octal .)
+    RIGHTSQUAREBRACKET reduce using rule 38 (elemento -> octal .)
+    RIGHTBRACKET    reduce using rule 38 (elemento -> octal .)
 
 
 state 31
 
-    (36) string -> STRING .
+    (39) elemento -> string .
 
-    $end            reduce using rule 36 (string -> STRING .)
-    COMMA           reduce using rule 36 (string -> STRING .)
-    RIGHTBRACKET    reduce using rule 36 (string -> STRING .)
-    RIGHTSQUAREBRACKET reduce using rule 36 (string -> STRING .)
+    NEWLINE         reduce using rule 39 (elemento -> string .)
+    COMMA           reduce using rule 39 (elemento -> string .)
+    RIGHTSQUAREBRACKET reduce using rule 39 (elemento -> string .)
+    RIGHTBRACKET    reduce using rule 39 (elemento -> string .)
 
 
 state 32
 
-    (38) boolean -> BOOLEAN .
+    (40) elemento -> boolean .
 
-    $end            reduce using rule 38 (boolean -> BOOLEAN .)
-    COMMA           reduce using rule 38 (boolean -> BOOLEAN .)
-    RIGHTBRACKET    reduce using rule 38 (boolean -> BOOLEAN .)
-    RIGHTSQUAREBRACKET reduce using rule 38 (boolean -> BOOLEAN .)
+    NEWLINE         reduce using rule 40 (elemento -> boolean .)
+    COMMA           reduce using rule 40 (elemento -> boolean .)
+    RIGHTSQUAREBRACKET reduce using rule 40 (elemento -> boolean .)
+    RIGHTBRACKET    reduce using rule 40 (elemento -> boolean .)
 
 
 state 33
 
-    (39) date -> DATE .
+    (41) elemento -> date .
 
-    $end            reduce using rule 39 (date -> DATE .)
-    COMMA           reduce using rule 39 (date -> DATE .)
-    RIGHTBRACKET    reduce using rule 39 (date -> DATE .)
-    RIGHTSQUAREBRACKET reduce using rule 39 (date -> DATE .)
+    NEWLINE         reduce using rule 41 (elemento -> date .)
+    COMMA           reduce using rule 41 (elemento -> date .)
+    RIGHTSQUAREBRACKET reduce using rule 41 (elemento -> date .)
+    RIGHTBRACKET    reduce using rule 41 (elemento -> date .)
 
 
 state 34
 
-    (40) time -> TIME .
+    (42) elemento -> time .
 
-    $end            reduce using rule 40 (time -> TIME .)
-    COMMA           reduce using rule 40 (time -> TIME .)
-    RIGHTBRACKET    reduce using rule 40 (time -> TIME .)
-    RIGHTSQUAREBRACKET reduce using rule 40 (time -> TIME .)
+    NEWLINE         reduce using rule 42 (elemento -> time .)
+    COMMA           reduce using rule 42 (elemento -> time .)
+    RIGHTSQUAREBRACKET reduce using rule 42 (elemento -> time .)
+    RIGHTBRACKET    reduce using rule 42 (elemento -> time .)
 
 
 state 35
 
-    (41) datetime -> DATETIME .
+    (43) elemento -> datetime .
 
-    $end            reduce using rule 41 (datetime -> DATETIME .)
-    COMMA           reduce using rule 41 (datetime -> DATETIME .)
-    RIGHTBRACKET    reduce using rule 41 (datetime -> DATETIME .)
-    RIGHTSQUAREBRACKET reduce using rule 41 (datetime -> DATETIME .)
+    NEWLINE         reduce using rule 43 (elemento -> datetime .)
+    COMMA           reduce using rule 43 (elemento -> datetime .)
+    RIGHTSQUAREBRACKET reduce using rule 43 (elemento -> datetime .)
+    RIGHTBRACKET    reduce using rule 43 (elemento -> datetime .)
 
 
 state 36
 
-    (17) lista -> LEFTSQUAREBRACKET . RIGHTSQUAREBRACKET
-    (18) lista -> LEFTSQUAREBRACKET . ContList RIGHTSQUAREBRACKET
-    (19) ContList -> . elemento
-    (20) ContList -> . elemento ContList2
-    (27) elemento -> .
-    (28) elemento -> . number
-    (29) elemento -> . string
-    (30) elemento -> . boolean
-    (31) elemento -> . date
-    (32) elemento -> . time
-    (33) elemento -> . datetime
-    (34) elemento -> . lista
-    (35) elemento -> . object
-    (37) number -> . NUMBER
-    (36) string -> . STRING
-    (38) boolean -> . BOOLEAN
-    (39) date -> . DATE
-    (40) time -> . TIME
-    (41) datetime -> . DATETIME
-    (17) lista -> . LEFTSQUAREBRACKET RIGHTSQUAREBRACKET
-    (18) lista -> . LEFTSQUAREBRACKET ContList RIGHTSQUAREBRACKET
-    (23) object -> . LEFTBRACKET RIGHTBRACKET
-    (24) object -> . LEFTBRACKET ContObject RIGHTBRACKET
+    (44) elemento -> offset_datetime .
 
-  ! shift/reduce conflict for RIGHTSQUAREBRACKET resolved as shift
-    RIGHTSQUAREBRACKET shift and go to state 40
-    COMMA           reduce using rule 27 (elemento -> .)
-    NUMBER          shift and go to state 30
-    STRING          shift and go to state 31
-    BOOLEAN         shift and go to state 32
-    DATE            shift and go to state 33
-    TIME            shift and go to state 34
-    DATETIME        shift and go to state 35
-    LEFTSQUAREBRACKET shift and go to state 36
-    LEFTBRACKET     shift and go to state 37
+    NEWLINE         reduce using rule 44 (elemento -> offset_datetime .)
+    COMMA           reduce using rule 44 (elemento -> offset_datetime .)
+    RIGHTSQUAREBRACKET reduce using rule 44 (elemento -> offset_datetime .)
+    RIGHTBRACKET    reduce using rule 44 (elemento -> offset_datetime .)
 
-  ! RIGHTSQUAREBRACKET [ reduce using rule 27 (elemento -> .) ]
-
-    ContList                       shift and go to state 41
-    elemento                       shift and go to state 42
-    number                         shift and go to state 22
-    string                         shift and go to state 23
-    boolean                        shift and go to state 24
-    date                           shift and go to state 25
-    time                           shift and go to state 26
-    datetime                       shift and go to state 27
-    lista                          shift and go to state 28
-    object                         shift and go to state 29
 
 state 37
 
-    (23) object -> LEFTBRACKET . RIGHTBRACKET
-    (24) object -> LEFTBRACKET . ContObject RIGHTBRACKET
-    (25) ContObject -> . assignment
-    (26) ContObject -> . assignment COMMA ContObject
-    (9) assignment -> . name EQUAL elemento
-    (10) name -> . elementoVar
-    (11) name -> . elementoVar name2
-    (14) elementoVar -> . VAR
-    (15) elementoVar -> . STRING
-    (16) elementoVar -> . NUMBER
+    (45) elemento -> lista .
 
-    RIGHTBRACKET    shift and go to state 43
-    VAR             shift and go to state 11
-    STRING          shift and go to state 12
-    NUMBER          shift and go to state 13
+    NEWLINE         reduce using rule 45 (elemento -> lista .)
+    COMMA           reduce using rule 45 (elemento -> lista .)
+    RIGHTSQUAREBRACKET reduce using rule 45 (elemento -> lista .)
+    RIGHTBRACKET    reduce using rule 45 (elemento -> lista .)
 
-    ContObject                     shift and go to state 44
-    assignment                     shift and go to state 45
-    name                           shift and go to state 7
-    elementoVar                    shift and go to state 10
 
 state 38
 
-    (12) name2 -> DOT elementoVar .
-    (13) name2 -> DOT elementoVar . name2
-    (12) name2 -> . DOT elementoVar
-    (13) name2 -> . DOT elementoVar name2
+    (46) elemento -> object .
 
-    EQUAL           reduce using rule 12 (name2 -> DOT elementoVar .)
-    RIGHTSQUAREBRACKET reduce using rule 12 (name2 -> DOT elementoVar .)
-    DOT             shift and go to state 18
+    NEWLINE         reduce using rule 46 (elemento -> object .)
+    COMMA           reduce using rule 46 (elemento -> object .)
+    RIGHTSQUAREBRACKET reduce using rule 46 (elemento -> object .)
+    RIGHTBRACKET    reduce using rule 46 (elemento -> object .)
 
-    name2                          shift and go to state 46
 
 state 39
 
-    (8) table -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET . RIGHTSQUAREBRACKET
+    (48) int -> INT .
 
-    RIGHTSQUAREBRACKET shift and go to state 47
+    NEWLINE         reduce using rule 48 (int -> INT .)
+    COMMA           reduce using rule 48 (int -> INT .)
+    RIGHTSQUAREBRACKET reduce using rule 48 (int -> INT .)
+    RIGHTBRACKET    reduce using rule 48 (int -> INT .)
 
 
 state 40
 
-    (17) lista -> LEFTSQUAREBRACKET RIGHTSQUAREBRACKET .
+    (49) float -> FLOAT .
 
-    $end            reduce using rule 17 (lista -> LEFTSQUAREBRACKET RIGHTSQUAREBRACKET .)
-    COMMA           reduce using rule 17 (lista -> LEFTSQUAREBRACKET RIGHTSQUAREBRACKET .)
-    RIGHTBRACKET    reduce using rule 17 (lista -> LEFTSQUAREBRACKET RIGHTSQUAREBRACKET .)
-    RIGHTSQUAREBRACKET reduce using rule 17 (lista -> LEFTSQUAREBRACKET RIGHTSQUAREBRACKET .)
+    NEWLINE         reduce using rule 49 (float -> FLOAT .)
+    COMMA           reduce using rule 49 (float -> FLOAT .)
+    RIGHTSQUAREBRACKET reduce using rule 49 (float -> FLOAT .)
+    RIGHTBRACKET    reduce using rule 49 (float -> FLOAT .)
 
 
 state 41
 
-    (18) lista -> LEFTSQUAREBRACKET ContList . RIGHTSQUAREBRACKET
+    (50) inf -> INF .
 
-    RIGHTSQUAREBRACKET shift and go to state 48
+    NEWLINE         reduce using rule 50 (inf -> INF .)
+    COMMA           reduce using rule 50 (inf -> INF .)
+    RIGHTSQUAREBRACKET reduce using rule 50 (inf -> INF .)
+    RIGHTBRACKET    reduce using rule 50 (inf -> INF .)
 
 
 state 42
 
-    (19) ContList -> elemento .
-    (20) ContList -> elemento . ContList2
-    (21) ContList2 -> . COMMA
-    (22) ContList2 -> . COMMA ContList
+    (51) nan -> NAN .
 
-    RIGHTSQUAREBRACKET reduce using rule 19 (ContList -> elemento .)
-    COMMA           shift and go to state 50
+    NEWLINE         reduce using rule 51 (nan -> NAN .)
+    COMMA           reduce using rule 51 (nan -> NAN .)
+    RIGHTSQUAREBRACKET reduce using rule 51 (nan -> NAN .)
+    RIGHTBRACKET    reduce using rule 51 (nan -> NAN .)
 
-    ContList2                      shift and go to state 49
 
 state 43
 
-    (23) object -> LEFTBRACKET RIGHTBRACKET .
+    (52) hexadecimal -> HEXADECIMAL .
 
-    $end            reduce using rule 23 (object -> LEFTBRACKET RIGHTBRACKET .)
-    COMMA           reduce using rule 23 (object -> LEFTBRACKET RIGHTBRACKET .)
-    RIGHTBRACKET    reduce using rule 23 (object -> LEFTBRACKET RIGHTBRACKET .)
-    RIGHTSQUAREBRACKET reduce using rule 23 (object -> LEFTBRACKET RIGHTBRACKET .)
+    NEWLINE         reduce using rule 52 (hexadecimal -> HEXADECIMAL .)
+    COMMA           reduce using rule 52 (hexadecimal -> HEXADECIMAL .)
+    RIGHTSQUAREBRACKET reduce using rule 52 (hexadecimal -> HEXADECIMAL .)
+    RIGHTBRACKET    reduce using rule 52 (hexadecimal -> HEXADECIMAL .)
 
 
 state 44
 
-    (24) object -> LEFTBRACKET ContObject . RIGHTBRACKET
+    (53) binary -> BINARY .
 
-    RIGHTBRACKET    shift and go to state 51
+    NEWLINE         reduce using rule 53 (binary -> BINARY .)
+    COMMA           reduce using rule 53 (binary -> BINARY .)
+    RIGHTSQUAREBRACKET reduce using rule 53 (binary -> BINARY .)
+    RIGHTBRACKET    reduce using rule 53 (binary -> BINARY .)
 
 
 state 45
 
-    (25) ContObject -> assignment .
-    (26) ContObject -> assignment . COMMA ContObject
+    (54) octal -> OCTAL .
 
-    RIGHTBRACKET    reduce using rule 25 (ContObject -> assignment .)
-    COMMA           shift and go to state 52
+    NEWLINE         reduce using rule 54 (octal -> OCTAL .)
+    COMMA           reduce using rule 54 (octal -> OCTAL .)
+    RIGHTSQUAREBRACKET reduce using rule 54 (octal -> OCTAL .)
+    RIGHTBRACKET    reduce using rule 54 (octal -> OCTAL .)
 
 
 state 46
 
-    (13) name2 -> DOT elementoVar name2 .
+    (47) string -> STRING .
 
-    EQUAL           reduce using rule 13 (name2 -> DOT elementoVar name2 .)
-    RIGHTSQUAREBRACKET reduce using rule 13 (name2 -> DOT elementoVar name2 .)
+    NEWLINE         reduce using rule 47 (string -> STRING .)
+    COMMA           reduce using rule 47 (string -> STRING .)
+    RIGHTSQUAREBRACKET reduce using rule 47 (string -> STRING .)
+    RIGHTBRACKET    reduce using rule 47 (string -> STRING .)
 
 
 state 47
 
-    (8) table -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET .
+    (55) boolean -> BOOLEAN .
 
-    $end            reduce using rule 8 (table -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET .)
+    NEWLINE         reduce using rule 55 (boolean -> BOOLEAN .)
+    COMMA           reduce using rule 55 (boolean -> BOOLEAN .)
+    RIGHTSQUAREBRACKET reduce using rule 55 (boolean -> BOOLEAN .)
+    RIGHTBRACKET    reduce using rule 55 (boolean -> BOOLEAN .)
 
 
 state 48
 
-    (18) lista -> LEFTSQUAREBRACKET ContList RIGHTSQUAREBRACKET .
+    (56) date -> DATE .
 
-    $end            reduce using rule 18 (lista -> LEFTSQUAREBRACKET ContList RIGHTSQUAREBRACKET .)
-    COMMA           reduce using rule 18 (lista -> LEFTSQUAREBRACKET ContList RIGHTSQUAREBRACKET .)
-    RIGHTBRACKET    reduce using rule 18 (lista -> LEFTSQUAREBRACKET ContList RIGHTSQUAREBRACKET .)
-    RIGHTSQUAREBRACKET reduce using rule 18 (lista -> LEFTSQUAREBRACKET ContList RIGHTSQUAREBRACKET .)
+    NEWLINE         reduce using rule 56 (date -> DATE .)
+    COMMA           reduce using rule 56 (date -> DATE .)
+    RIGHTSQUAREBRACKET reduce using rule 56 (date -> DATE .)
+    RIGHTBRACKET    reduce using rule 56 (date -> DATE .)
 
 
 state 49
 
-    (20) ContList -> elemento ContList2 .
+    (57) time -> TIME .
 
-    RIGHTSQUAREBRACKET reduce using rule 20 (ContList -> elemento ContList2 .)
+    NEWLINE         reduce using rule 57 (time -> TIME .)
+    COMMA           reduce using rule 57 (time -> TIME .)
+    RIGHTSQUAREBRACKET reduce using rule 57 (time -> TIME .)
+    RIGHTBRACKET    reduce using rule 57 (time -> TIME .)
 
 
 state 50
 
-    (21) ContList2 -> COMMA .
-    (22) ContList2 -> COMMA . ContList
-    (19) ContList -> . elemento
-    (20) ContList -> . elemento ContList2
-    (27) elemento -> .
-    (28) elemento -> . number
-    (29) elemento -> . string
-    (30) elemento -> . boolean
-    (31) elemento -> . date
-    (32) elemento -> . time
-    (33) elemento -> . datetime
-    (34) elemento -> . lista
-    (35) elemento -> . object
-    (37) number -> . NUMBER
-    (36) string -> . STRING
-    (38) boolean -> . BOOLEAN
-    (39) date -> . DATE
-    (40) time -> . TIME
-    (41) datetime -> . DATETIME
-    (17) lista -> . LEFTSQUAREBRACKET RIGHTSQUAREBRACKET
-    (18) lista -> . LEFTSQUAREBRACKET ContList RIGHTSQUAREBRACKET
-    (23) object -> . LEFTBRACKET RIGHTBRACKET
-    (24) object -> . LEFTBRACKET ContObject RIGHTBRACKET
+    (58) datetime -> DATETIME .
 
-  ! reduce/reduce conflict for RIGHTSQUAREBRACKET resolved using rule 21 (ContList2 -> COMMA .)
-    RIGHTSQUAREBRACKET reduce using rule 21 (ContList2 -> COMMA .)
-    COMMA           reduce using rule 27 (elemento -> .)
-    NUMBER          shift and go to state 30
-    STRING          shift and go to state 31
-    BOOLEAN         shift and go to state 32
-    DATE            shift and go to state 33
-    TIME            shift and go to state 34
-    DATETIME        shift and go to state 35
-    LEFTSQUAREBRACKET shift and go to state 36
-    LEFTBRACKET     shift and go to state 37
+    NEWLINE         reduce using rule 58 (datetime -> DATETIME .)
+    COMMA           reduce using rule 58 (datetime -> DATETIME .)
+    RIGHTSQUAREBRACKET reduce using rule 58 (datetime -> DATETIME .)
+    RIGHTBRACKET    reduce using rule 58 (datetime -> DATETIME .)
 
-  ! RIGHTSQUAREBRACKET [ reduce using rule 27 (elemento -> .) ]
-
-    ContList                       shift and go to state 53
-    elemento                       shift and go to state 42
-    number                         shift and go to state 22
-    string                         shift and go to state 23
-    boolean                        shift and go to state 24
-    date                           shift and go to state 25
-    time                           shift and go to state 26
-    datetime                       shift and go to state 27
-    lista                          shift and go to state 28
-    object                         shift and go to state 29
 
 state 51
 
-    (24) object -> LEFTBRACKET ContObject RIGHTBRACKET .
+    (59) offset_datetime -> OFFSETDATETIME .
 
-    $end            reduce using rule 24 (object -> LEFTBRACKET ContObject RIGHTBRACKET .)
-    COMMA           reduce using rule 24 (object -> LEFTBRACKET ContObject RIGHTBRACKET .)
-    RIGHTBRACKET    reduce using rule 24 (object -> LEFTBRACKET ContObject RIGHTBRACKET .)
-    RIGHTSQUAREBRACKET reduce using rule 24 (object -> LEFTBRACKET ContObject RIGHTBRACKET .)
+    NEWLINE         reduce using rule 59 (offset_datetime -> OFFSETDATETIME .)
+    COMMA           reduce using rule 59 (offset_datetime -> OFFSETDATETIME .)
+    RIGHTSQUAREBRACKET reduce using rule 59 (offset_datetime -> OFFSETDATETIME .)
+    RIGHTBRACKET    reduce using rule 59 (offset_datetime -> OFFSETDATETIME .)
 
 
 state 52
 
-    (26) ContObject -> assignment COMMA . ContObject
-    (25) ContObject -> . assignment
-    (26) ContObject -> . assignment COMMA ContObject
-    (9) assignment -> . name EQUAL elemento
-    (10) name -> . elementoVar
-    (11) name -> . elementoVar name2
-    (14) elementoVar -> . VAR
-    (15) elementoVar -> . STRING
-    (16) elementoVar -> . NUMBER
+    (21) lista -> LEFTSQUAREBRACKET . RIGHTSQUAREBRACKET
+    (22) lista -> LEFTSQUAREBRACKET . ContList RIGHTSQUAREBRACKET
+    (23) ContList -> . elemento
+    (24) ContList -> . elemento ContList2
+    (31) elemento -> .
+    (32) elemento -> . int
+    (33) elemento -> . float
+    (34) elemento -> . inf
+    (35) elemento -> . nan
+    (36) elemento -> . hexadecimal
+    (37) elemento -> . binary
+    (38) elemento -> . octal
+    (39) elemento -> . string
+    (40) elemento -> . boolean
+    (41) elemento -> . date
+    (42) elemento -> . time
+    (43) elemento -> . datetime
+    (44) elemento -> . offset_datetime
+    (45) elemento -> . lista
+    (46) elemento -> . object
+    (48) int -> . INT
+    (49) float -> . FLOAT
+    (50) inf -> . INF
+    (51) nan -> . NAN
+    (52) hexadecimal -> . HEXADECIMAL
+    (53) binary -> . BINARY
+    (54) octal -> . OCTAL
+    (47) string -> . STRING
+    (55) boolean -> . BOOLEAN
+    (56) date -> . DATE
+    (57) time -> . TIME
+    (58) datetime -> . DATETIME
+    (59) offset_datetime -> . OFFSETDATETIME
+    (21) lista -> . LEFTSQUAREBRACKET RIGHTSQUAREBRACKET
+    (22) lista -> . LEFTSQUAREBRACKET ContList RIGHTSQUAREBRACKET
+    (27) object -> . LEFTBRACKET RIGHTBRACKET
+    (28) object -> . LEFTBRACKET ContObject RIGHTBRACKET
 
-    VAR             shift and go to state 11
-    STRING          shift and go to state 12
-    NUMBER          shift and go to state 13
+  ! shift/reduce conflict for RIGHTSQUAREBRACKET resolved as shift
+    RIGHTSQUAREBRACKET shift and go to state 58
+    COMMA           reduce using rule 31 (elemento -> .)
+    INT             shift and go to state 39
+    FLOAT           shift and go to state 40
+    INF             shift and go to state 41
+    NAN             shift and go to state 42
+    HEXADECIMAL     shift and go to state 43
+    BINARY          shift and go to state 44
+    OCTAL           shift and go to state 45
+    STRING          shift and go to state 46
+    BOOLEAN         shift and go to state 47
+    DATE            shift and go to state 48
+    TIME            shift and go to state 49
+    DATETIME        shift and go to state 50
+    OFFSETDATETIME  shift and go to state 51
+    LEFTSQUAREBRACKET shift and go to state 52
+    LEFTBRACKET     shift and go to state 53
 
-    assignment                     shift and go to state 45
-    ContObject                     shift and go to state 54
-    name                           shift and go to state 7
-    elementoVar                    shift and go to state 10
+  ! RIGHTSQUAREBRACKET [ reduce using rule 31 (elemento -> .) ]
+
+    ContList                       shift and go to state 59
+    elemento                       shift and go to state 60
+    int                            shift and go to state 24
+    float                          shift and go to state 25
+    inf                            shift and go to state 26
+    nan                            shift and go to state 27
+    hexadecimal                    shift and go to state 28
+    binary                         shift and go to state 29
+    octal                          shift and go to state 30
+    string                         shift and go to state 31
+    boolean                        shift and go to state 32
+    date                           shift and go to state 33
+    time                           shift and go to state 34
+    datetime                       shift and go to state 35
+    offset_datetime                shift and go to state 36
+    lista                          shift and go to state 37
+    object                         shift and go to state 38
 
 state 53
 
-    (22) ContList2 -> COMMA ContList .
+    (27) object -> LEFTBRACKET . RIGHTBRACKET
+    (28) object -> LEFTBRACKET . ContObject RIGHTBRACKET
+    (29) ContObject -> . assignment_object
+    (30) ContObject -> . assignment_object COMMA ContObject
+    (13) assignment_object -> . name EQUAL elemento
+    (14) name -> . elementoVar
+    (15) name -> . elementoVar name2
+    (18) elementoVar -> . VAR
+    (19) elementoVar -> . STRING
+    (20) elementoVar -> . INT
 
-    RIGHTSQUAREBRACKET reduce using rule 22 (ContList2 -> COMMA ContList .)
+    RIGHTBRACKET    shift and go to state 61
+    VAR             shift and go to state 13
+    STRING          shift and go to state 14
+    INT             shift and go to state 15
 
+    ContObject                     shift and go to state 62
+    assignment_object              shift and go to state 63
+    name                           shift and go to state 64
+    elementoVar                    shift and go to state 12
 
 state 54
 
-    (26) ContObject -> assignment COMMA ContObject .
+    (11) header2 -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET name . RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET NEWLINE
 
-    RIGHTBRACKET    reduce using rule 26 (ContObject -> assignment COMMA ContObject .)
+    RIGHTSQUAREBRACKET shift and go to state 65
+
+
+state 55
+
+    (10) header1 -> LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET . NEWLINE
+
+    NEWLINE         shift and go to state 66
+
+
+state 56
+
+    (16) name2 -> DOT elementoVar .
+    (17) name2 -> DOT elementoVar . name2
+    (16) name2 -> . DOT elementoVar
+    (17) name2 -> . DOT elementoVar name2
+
+    EQUAL           reduce using rule 16 (name2 -> DOT elementoVar .)
+    RIGHTSQUAREBRACKET reduce using rule 16 (name2 -> DOT elementoVar .)
+    DOT             shift and go to state 22
+
+    name2                          shift and go to state 67
+
+state 57
+
+    (12) assignment -> name EQUAL elemento NEWLINE .
+
+    NEWLINE         reduce using rule 12 (assignment -> name EQUAL elemento NEWLINE .)
+    COMMENT         reduce using rule 12 (assignment -> name EQUAL elemento NEWLINE .)
+    LEFTSQUAREBRACKET reduce using rule 12 (assignment -> name EQUAL elemento NEWLINE .)
+    VAR             reduce using rule 12 (assignment -> name EQUAL elemento NEWLINE .)
+    STRING          reduce using rule 12 (assignment -> name EQUAL elemento NEWLINE .)
+    INT             reduce using rule 12 (assignment -> name EQUAL elemento NEWLINE .)
+    $end            reduce using rule 12 (assignment -> name EQUAL elemento NEWLINE .)
+
+
+state 58
+
+    (21) lista -> LEFTSQUAREBRACKET RIGHTSQUAREBRACKET .
+
+    NEWLINE         reduce using rule 21 (lista -> LEFTSQUAREBRACKET RIGHTSQUAREBRACKET .)
+    COMMA           reduce using rule 21 (lista -> LEFTSQUAREBRACKET RIGHTSQUAREBRACKET .)
+    RIGHTSQUAREBRACKET reduce using rule 21 (lista -> LEFTSQUAREBRACKET RIGHTSQUAREBRACKET .)
+    RIGHTBRACKET    reduce using rule 21 (lista -> LEFTSQUAREBRACKET RIGHTSQUAREBRACKET .)
+
+
+state 59
+
+    (22) lista -> LEFTSQUAREBRACKET ContList . RIGHTSQUAREBRACKET
+
+    RIGHTSQUAREBRACKET shift and go to state 68
+
+
+state 60
+
+    (23) ContList -> elemento .
+    (24) ContList -> elemento . ContList2
+    (25) ContList2 -> . COMMA
+    (26) ContList2 -> . COMMA ContList
+
+    RIGHTSQUAREBRACKET reduce using rule 23 (ContList -> elemento .)
+    COMMA           shift and go to state 70
+
+    ContList2                      shift and go to state 69
+
+state 61
+
+    (27) object -> LEFTBRACKET RIGHTBRACKET .
+
+    NEWLINE         reduce using rule 27 (object -> LEFTBRACKET RIGHTBRACKET .)
+    COMMA           reduce using rule 27 (object -> LEFTBRACKET RIGHTBRACKET .)
+    RIGHTSQUAREBRACKET reduce using rule 27 (object -> LEFTBRACKET RIGHTBRACKET .)
+    RIGHTBRACKET    reduce using rule 27 (object -> LEFTBRACKET RIGHTBRACKET .)
+
+
+state 62
+
+    (28) object -> LEFTBRACKET ContObject . RIGHTBRACKET
+
+    RIGHTBRACKET    shift and go to state 71
+
+
+state 63
+
+    (29) ContObject -> assignment_object .
+    (30) ContObject -> assignment_object . COMMA ContObject
+
+    RIGHTBRACKET    reduce using rule 29 (ContObject -> assignment_object .)
+    COMMA           shift and go to state 72
+
+
+state 64
+
+    (13) assignment_object -> name . EQUAL elemento
+
+    EQUAL           shift and go to state 73
+
+
+state 65
+
+    (11) header2 -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET . RIGHTSQUAREBRACKET NEWLINE
+
+    RIGHTSQUAREBRACKET shift and go to state 74
+
+
+state 66
+
+    (10) header1 -> LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET NEWLINE .
+
+    NEWLINE         reduce using rule 10 (header1 -> LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET NEWLINE .)
+    COMMENT         reduce using rule 10 (header1 -> LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET NEWLINE .)
+    LEFTSQUAREBRACKET reduce using rule 10 (header1 -> LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET NEWLINE .)
+    VAR             reduce using rule 10 (header1 -> LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET NEWLINE .)
+    STRING          reduce using rule 10 (header1 -> LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET NEWLINE .)
+    INT             reduce using rule 10 (header1 -> LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET NEWLINE .)
+    $end            reduce using rule 10 (header1 -> LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET NEWLINE .)
+
+
+state 67
+
+    (17) name2 -> DOT elementoVar name2 .
+
+    EQUAL           reduce using rule 17 (name2 -> DOT elementoVar name2 .)
+    RIGHTSQUAREBRACKET reduce using rule 17 (name2 -> DOT elementoVar name2 .)
+
+
+state 68
+
+    (22) lista -> LEFTSQUAREBRACKET ContList RIGHTSQUAREBRACKET .
+
+    NEWLINE         reduce using rule 22 (lista -> LEFTSQUAREBRACKET ContList RIGHTSQUAREBRACKET .)
+    COMMA           reduce using rule 22 (lista -> LEFTSQUAREBRACKET ContList RIGHTSQUAREBRACKET .)
+    RIGHTSQUAREBRACKET reduce using rule 22 (lista -> LEFTSQUAREBRACKET ContList RIGHTSQUAREBRACKET .)
+    RIGHTBRACKET    reduce using rule 22 (lista -> LEFTSQUAREBRACKET ContList RIGHTSQUAREBRACKET .)
+
+
+state 69
+
+    (24) ContList -> elemento ContList2 .
+
+    RIGHTSQUAREBRACKET reduce using rule 24 (ContList -> elemento ContList2 .)
+
+
+state 70
+
+    (25) ContList2 -> COMMA .
+    (26) ContList2 -> COMMA . ContList
+    (23) ContList -> . elemento
+    (24) ContList -> . elemento ContList2
+    (31) elemento -> .
+    (32) elemento -> . int
+    (33) elemento -> . float
+    (34) elemento -> . inf
+    (35) elemento -> . nan
+    (36) elemento -> . hexadecimal
+    (37) elemento -> . binary
+    (38) elemento -> . octal
+    (39) elemento -> . string
+    (40) elemento -> . boolean
+    (41) elemento -> . date
+    (42) elemento -> . time
+    (43) elemento -> . datetime
+    (44) elemento -> . offset_datetime
+    (45) elemento -> . lista
+    (46) elemento -> . object
+    (48) int -> . INT
+    (49) float -> . FLOAT
+    (50) inf -> . INF
+    (51) nan -> . NAN
+    (52) hexadecimal -> . HEXADECIMAL
+    (53) binary -> . BINARY
+    (54) octal -> . OCTAL
+    (47) string -> . STRING
+    (55) boolean -> . BOOLEAN
+    (56) date -> . DATE
+    (57) time -> . TIME
+    (58) datetime -> . DATETIME
+    (59) offset_datetime -> . OFFSETDATETIME
+    (21) lista -> . LEFTSQUAREBRACKET RIGHTSQUAREBRACKET
+    (22) lista -> . LEFTSQUAREBRACKET ContList RIGHTSQUAREBRACKET
+    (27) object -> . LEFTBRACKET RIGHTBRACKET
+    (28) object -> . LEFTBRACKET ContObject RIGHTBRACKET
+
+  ! reduce/reduce conflict for RIGHTSQUAREBRACKET resolved using rule 25 (ContList2 -> COMMA .)
+    RIGHTSQUAREBRACKET reduce using rule 25 (ContList2 -> COMMA .)
+    COMMA           reduce using rule 31 (elemento -> .)
+    INT             shift and go to state 39
+    FLOAT           shift and go to state 40
+    INF             shift and go to state 41
+    NAN             shift and go to state 42
+    HEXADECIMAL     shift and go to state 43
+    BINARY          shift and go to state 44
+    OCTAL           shift and go to state 45
+    STRING          shift and go to state 46
+    BOOLEAN         shift and go to state 47
+    DATE            shift and go to state 48
+    TIME            shift and go to state 49
+    DATETIME        shift and go to state 50
+    OFFSETDATETIME  shift and go to state 51
+    LEFTSQUAREBRACKET shift and go to state 52
+    LEFTBRACKET     shift and go to state 53
+
+  ! RIGHTSQUAREBRACKET [ reduce using rule 31 (elemento -> .) ]
+
+    ContList                       shift and go to state 75
+    elemento                       shift and go to state 60
+    int                            shift and go to state 24
+    float                          shift and go to state 25
+    inf                            shift and go to state 26
+    nan                            shift and go to state 27
+    hexadecimal                    shift and go to state 28
+    binary                         shift and go to state 29
+    octal                          shift and go to state 30
+    string                         shift and go to state 31
+    boolean                        shift and go to state 32
+    date                           shift and go to state 33
+    time                           shift and go to state 34
+    datetime                       shift and go to state 35
+    offset_datetime                shift and go to state 36
+    lista                          shift and go to state 37
+    object                         shift and go to state 38
+
+state 71
+
+    (28) object -> LEFTBRACKET ContObject RIGHTBRACKET .
+
+    NEWLINE         reduce using rule 28 (object -> LEFTBRACKET ContObject RIGHTBRACKET .)
+    COMMA           reduce using rule 28 (object -> LEFTBRACKET ContObject RIGHTBRACKET .)
+    RIGHTSQUAREBRACKET reduce using rule 28 (object -> LEFTBRACKET ContObject RIGHTBRACKET .)
+    RIGHTBRACKET    reduce using rule 28 (object -> LEFTBRACKET ContObject RIGHTBRACKET .)
+
+
+state 72
+
+    (30) ContObject -> assignment_object COMMA . ContObject
+    (29) ContObject -> . assignment_object
+    (30) ContObject -> . assignment_object COMMA ContObject
+    (13) assignment_object -> . name EQUAL elemento
+    (14) name -> . elementoVar
+    (15) name -> . elementoVar name2
+    (18) elementoVar -> . VAR
+    (19) elementoVar -> . STRING
+    (20) elementoVar -> . INT
+
+    VAR             shift and go to state 13
+    STRING          shift and go to state 14
+    INT             shift and go to state 15
+
+    assignment_object              shift and go to state 63
+    ContObject                     shift and go to state 76
+    name                           shift and go to state 64
+    elementoVar                    shift and go to state 12
+
+state 73
+
+    (13) assignment_object -> name EQUAL . elemento
+    (31) elemento -> .
+    (32) elemento -> . int
+    (33) elemento -> . float
+    (34) elemento -> . inf
+    (35) elemento -> . nan
+    (36) elemento -> . hexadecimal
+    (37) elemento -> . binary
+    (38) elemento -> . octal
+    (39) elemento -> . string
+    (40) elemento -> . boolean
+    (41) elemento -> . date
+    (42) elemento -> . time
+    (43) elemento -> . datetime
+    (44) elemento -> . offset_datetime
+    (45) elemento -> . lista
+    (46) elemento -> . object
+    (48) int -> . INT
+    (49) float -> . FLOAT
+    (50) inf -> . INF
+    (51) nan -> . NAN
+    (52) hexadecimal -> . HEXADECIMAL
+    (53) binary -> . BINARY
+    (54) octal -> . OCTAL
+    (47) string -> . STRING
+    (55) boolean -> . BOOLEAN
+    (56) date -> . DATE
+    (57) time -> . TIME
+    (58) datetime -> . DATETIME
+    (59) offset_datetime -> . OFFSETDATETIME
+    (21) lista -> . LEFTSQUAREBRACKET RIGHTSQUAREBRACKET
+    (22) lista -> . LEFTSQUAREBRACKET ContList RIGHTSQUAREBRACKET
+    (27) object -> . LEFTBRACKET RIGHTBRACKET
+    (28) object -> . LEFTBRACKET ContObject RIGHTBRACKET
+
+    COMMA           reduce using rule 31 (elemento -> .)
+    RIGHTBRACKET    reduce using rule 31 (elemento -> .)
+    INT             shift and go to state 39
+    FLOAT           shift and go to state 40
+    INF             shift and go to state 41
+    NAN             shift and go to state 42
+    HEXADECIMAL     shift and go to state 43
+    BINARY          shift and go to state 44
+    OCTAL           shift and go to state 45
+    STRING          shift and go to state 46
+    BOOLEAN         shift and go to state 47
+    DATE            shift and go to state 48
+    TIME            shift and go to state 49
+    DATETIME        shift and go to state 50
+    OFFSETDATETIME  shift and go to state 51
+    LEFTSQUAREBRACKET shift and go to state 52
+    LEFTBRACKET     shift and go to state 53
+
+    elemento                       shift and go to state 77
+    int                            shift and go to state 24
+    float                          shift and go to state 25
+    inf                            shift and go to state 26
+    nan                            shift and go to state 27
+    hexadecimal                    shift and go to state 28
+    binary                         shift and go to state 29
+    octal                          shift and go to state 30
+    string                         shift and go to state 31
+    boolean                        shift and go to state 32
+    date                           shift and go to state 33
+    time                           shift and go to state 34
+    datetime                       shift and go to state 35
+    offset_datetime                shift and go to state 36
+    lista                          shift and go to state 37
+    object                         shift and go to state 38
+
+state 74
+
+    (11) header2 -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET . NEWLINE
+
+    NEWLINE         shift and go to state 78
+
+
+state 75
+
+    (26) ContList2 -> COMMA ContList .
+
+    RIGHTSQUAREBRACKET reduce using rule 26 (ContList2 -> COMMA ContList .)
+
+
+state 76
+
+    (30) ContObject -> assignment_object COMMA ContObject .
+
+    RIGHTBRACKET    reduce using rule 30 (ContObject -> assignment_object COMMA ContObject .)
+
+
+state 77
+
+    (13) assignment_object -> name EQUAL elemento .
+
+    COMMA           reduce using rule 13 (assignment_object -> name EQUAL elemento .)
+    RIGHTBRACKET    reduce using rule 13 (assignment_object -> name EQUAL elemento .)
+
+
+state 78
+
+    (11) header2 -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET NEWLINE .
+
+    NEWLINE         reduce using rule 11 (header2 -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET NEWLINE .)
+    COMMENT         reduce using rule 11 (header2 -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET NEWLINE .)
+    LEFTSQUAREBRACKET reduce using rule 11 (header2 -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET NEWLINE .)
+    VAR             reduce using rule 11 (header2 -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET NEWLINE .)
+    STRING          reduce using rule 11 (header2 -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET NEWLINE .)
+    INT             reduce using rule 11 (header2 -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET NEWLINE .)
+    $end            reduce using rule 11 (header2 -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET NEWLINE .)
 
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
-WARNING: shift/reduce conflict for RIGHTSQUAREBRACKET in state 36 resolved as shift
-WARNING: reduce/reduce conflict in state 50 resolved using rule (ContList2 -> COMMA)
-WARNING: rejected rule (elemento -> <empty>) in state 50
+WARNING: shift/reduce conflict for RIGHTSQUAREBRACKET in state 52 resolved as shift
+WARNING: reduce/reduce conflict in state 70 resolved using rule (ContList2 -> COMMA)
+WARNING: rejected rule (elemento -> <empty>) in state 70
