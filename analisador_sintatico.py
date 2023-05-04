@@ -129,8 +129,8 @@ def p_name2(p):
 def p_elemento_var(p):
     """
         elementoVar : VAR
-                    | STRING
-                    | INT
+                    | string
+                    | int
     """
     p[0] = p[1]
 
@@ -182,8 +182,7 @@ def p_conteudo_object(p):
     if len(p) == 2:
         p[0] = p[1]
     else: 
-        obj = p.parser.toml.add_element_aux(p[1],p[3])
-        p[0] = obj
+        p[0] = p.parser.toml.add_element_aux(p[1],p[3])
 
 def p_elemento(p):
     """
@@ -300,7 +299,7 @@ parser.table_dict = False
 parser.table_list = False
 
 
-f = open('./TOML/toml_final.toml','r')
+f = open('./TOML/toml5.toml','r')
 lines = f.readlines()
 result = ""
 for line in lines:  

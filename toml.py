@@ -31,7 +31,6 @@ class TOML:
                     print(self.data[key][-1])
                     print(value)
                     self.add_element_aux(self.data[key][-1], value)
-                    #self.data[key] = self.add_element_aux2(self.data[key],value)
                 else:
                     self.data[key] = value
         return self.data
@@ -52,16 +51,6 @@ class TOML:
                     atual_dict[key] = value
         return atual_dict
 
-
-    #def add_element_aux2(self, list, dict):
-    #    for key, value in dict.items():
-    #        else:    
-    #            if isinstance(self.data[key], list) and isinstance(value, list):
-    #            elif isinstance(dict1[key], list):
-    #            dict1[key] = self.add_element_aux(dict1[key], value)
-    #    
-    #    return dict1
-    #
     """
         Função chamada recursivamente para realizar a devida adição entre dicionários aninhados.
     """
@@ -72,6 +61,8 @@ class TOML:
             else:
                 if isinstance(value, dict) and isinstance(dict1[key], dict):
                     dict1[key] = self.add_element_aux(dict1[key], value)
+                elif isinstance(value, list):
+                    dict1[key].append(value[0])
                 else:
                     dict1[key] = value
         return dict1
