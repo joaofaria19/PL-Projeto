@@ -13,9 +13,8 @@ class Table:
         self.type = type
         self.name = name
         self.data = {}
-    
-    def set_data(self,object):
-        self.data = object
+        self.list = []
+
 
 start = 'program'
 
@@ -29,8 +28,7 @@ def p_program(p):
             p.parser.toml.add_element(p[1].content)
         
         elif p.parser.table_dict == True:
-            result = p.parser.toml.add_element_table(p.parser.table.data,p[1].content)
-            p.parser.table.set_data(result)
+            p.parser.toml.add_element_table(p.parser.table.data,p[1].content)
             
             name = p.parser.table.name
             data = p.parser.table.data
@@ -38,18 +36,24 @@ def p_program(p):
             p.parser.toml.add_element(obj)
         
         elif p.parser.table_list == True:
-            pass
-
+            p.parser.table.list.append(p[1].content)
+            
+            name = p.parser.table.name
+            list = p.parser.table.list
+            obj = p.parser.toml.new_assignment(name,list)
+            p.parser.toml.add_element(obj)
+        
     elif isinstance(p[1],Table):
+        p.parser.table = p[1]
+        
         if p[1].type == 'table_dict':
             p.parser.table_list = False
             p.parser.table_dict = True
-            p.parser.table = p[1]
-        
         elif p[1].type == 'table_list':
             p.parser.table_dict = False
             p.parser.table_list = True
-            p.parser.table = p[1]
+    else : 
+        pass
 
     p[0] = parser.toml.data
 
@@ -280,7 +284,6 @@ def p_offset_datetime(p):
     """
     p[0] = p[1][1:-1]
 
-
 def p_error(p):
     if p:
         print(f"Sintax error on line {p.lineno}, column {p.lexpos + 1}: "
@@ -297,13 +300,13 @@ parser.table_dict = False
 parser.table_list = False
 
 
-f = open('./TOML/toml4.toml','r')
+f = open('./TOML/toml_final.toml','r')
 lines = f.readlines()
 result = ""
 for line in lines:  
     result += str(parser.parse(line))
 
-#print(result)
+print(result)
 #print(parser.toml.data)
 print(parser.toml.toJSON())
 

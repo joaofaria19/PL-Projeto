@@ -6,7 +6,6 @@ tokens = ('COMMENT', 'COMMA', 'DOT', 'VAR',
           'DATE', 'TIME', 'DATETIME','OFFSET','OFFSETDATETIME', 'HEXADECIMAL','BINARY','OCTAL',
           'NEWLINE')
 
-t_COMMENT = r'\#.*'
 t_COMMA = r'\,'
 t_DOT = r'\.'
 t_LEFTSQUAREBRACKET = r'\['
@@ -31,6 +30,7 @@ t_HEXADECIMAL = r'0x[0-9A-Fa-f]([0-9A-Fa-f]|_[0-9A-Fa-f])*'
 t_BINARY = r'0b[01]([01]|_[01])*'
 t_OCTAL = '0o[0-7]([0-7]|_[0-9])*'
 
+t_COMMENT = r'\#.*'
 t_ignore = ' \t'
 
 def t_NEWLINE(t):
