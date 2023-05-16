@@ -7,7 +7,7 @@ color = "red"
 shape = "round"
 
 # nested array of tables
-[[fruits.varieties.summer]]  
+[[fruits.spring]]  
 name = "red delicious"
 
 [[fruits.varieties.summer]]
@@ -19,3 +19,18 @@ name = "banana"
 
 [[fruits.varieties]]
 name = "plantain"
+
+
+[[fruits]]
+name = "morangos"
+
+[[fruits.color]]
+color = "red"
+country = "portugal"
+continente = "europa"
+
+[[market]]
+name = "continente"
+
+[[market.fruits]]
+name = "amanhecer"
