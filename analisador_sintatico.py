@@ -1,62 +1,62 @@
 import ply.yacc as yacc
 import analisador_lexico as lexer
-import toml as TOML
+import toml as toml
+from toml import Assignment
+from toml import Table
 
 tokens = lexer.tokens
 
-class Assignment:
-    def __init__(self,content):
-        self.content = content
-    
-class Table:
-    def __init__(self,name,type):
-        self.type = type
-        self.name = name
-        self.data = {}
-        self.list = []
 
 
 start = 'program'
 
 def p_program(p):
     """
-        program : statement
-                | statement program
+    program : statements
     """
+    for assg in p.parser.stack:
+        p.parser.final.insert(0,assg)
+    for obj in p.parser.final:
+        p.parser.toml.add_element(obj)
+    
+    p[0] = p[1]
+
+def p_statements(p):
+    """
+        statements : statement
+                | statement statements
+    """
+    
     if isinstance(p[1],Assignment): 
-        if p.parser.table_dict == False and  p.parser.table_list == False :
-            p.parser.toml.add_element(p[1].content)
-        
-        elif p.parser.table_dict == True:
-            p.parser.toml.add_element_table(p.parser.table.data,p[1].content)
-            
-            name = p.parser.table.name
-            data = p.parser.table.data
-            obj = p.parser.toml.new_assignment(name,data)
-            p.parser.toml.add_element(obj)
-        
-        elif p.parser.table_list == True:
-            p.parser.table.list.append(p[1].content)
-            
-            name = p.parser.table.name
-            list = p.parser.table.list
-            obj = p.parser.toml.new_assignment(name,list)
-            p.parser.toml.add_element(obj)
-        
+        p.parser.stack.append(p[1].content)
+        p.parser.table_token = False
     elif isinstance(p[1],Table):
         p.parser.table = p[1]
-        
         if p[1].type == 'table_dict':
-            p.parser.table_list = False
-            p.parser.table_dict = True
+            name = p.parser.table.name
+            if p.parser.table_token:
+                obj = p.parser.toml.new_assignment(name,{})
+                p.parser.final.insert(0,obj)
+            else:
+                for assg in reversed(p.parser.stack):
+                    p.parser.toml.add_element_table(p.parser.table.data,assg)
+                data = p.parser.table.data
+                obj = p.parser.toml.new_assignment(name,data)
+                p.parser.final.insert(0,obj)
         elif p[1].type == 'table_list':
-            p.parser.table_dict = False
-            p.parser.table_list = True
-    else : 
-        pass
-
+            name = p.parser.table.name
+            if p.parser.table_token:
+                obj = p.parser.toml.new_assignment(name,[])
+                p.parser.final.insert(0,obj)
+            else:
+                for assg in reversed(p.parser.stack):
+                    obj = p.parser.toml.new_assignment(name,[assg])
+                    p.parser.final.insert(0,obj)
+        p.parser.stack = []
+        p.parser.table_token = True
+    else:
+        pass        
     p[0] = parser.toml.data
-
 
 
 def p_statement(p):
@@ -64,41 +64,74 @@ def p_statement(p):
         statement : table
                 | assignment
                 | comment
-                | NEWLINE
+                | newline
     """
     p[0] = p[1]
+    
+def p_newline(p):
+    """
+        newline : NEWLINE
+    """
+    p[0] = {'type': 'newline', 'value':p[1]}
 
 def p_comment(p):
     """
-        comment : COMMENT NEWLINE
+        comment : COMMENT
     """
     p[0] = {'type': 'comment', 'value':p[1]}
 
 def p_table(p):
     """
         table : header1
-            | header2
+            | header2 
     """
     p[0] = p[1]
 
 def p_header1(p):
     """
-        header1 : LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET NEWLINE
+        header1 : LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET 
+            | LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET NEWLINE
+            | LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET COMMENT
     """
-    p[0] = Table(p[2],'table_dict')
+    if len(p) == 4:
+        if p.lexer.lineno == p.parser.length:
+            p[0] = Table(p[2],'table_dict')
+        else:
+            raise Exception(f'Unexpected character, expected only newlines or comments till end of line at row {p.lexer.lineno}')
+    
+    else:
+        p[0] = Table(p[2],'table_dict')
     
 def p_header2(p):
     """
-        header2 : LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET NEWLINE
+        header2 : LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET 
+            | LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET NEWLINE
+            | LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET COMMENT
+    
     """
-    p[0] = Table(p[3],'table_list')
+    if len(p) == 6:
+        if p.lexer.lineno == p.parser.length:
+            p[0] = Table(p[3],'table_list')
+        else:
+            raise Exception(f'Unexpected character, expected only newlines or comments till end of line at row {p.lexer.lineno}')
+    
+    else:
+        p[0] = Table(p[3],'table_list')
 
 def p_assignment(p):
     """
-        assignment : name EQUAL elemento NEWLINE
+        assignment : name EQUAL elemento 
+                | name EQUAL elemento NEWLINE
     """
-    content = p.parser.toml.new_assignment(p[1], p[3])
-    p[0] = Assignment(content)
+    if len(p) == 4:
+        if p.lexer.lineno == p.parser.length:
+            content = p.parser.toml.new_assignment(p[1], p[3])
+            p[0] = Assignment(content)
+        else:
+            raise Exception(f'Unexpected character, expected only newlines or comments till end of line at row {p.lexer.lineno}')
+    else:
+        content = p.parser.toml.new_assignment(p[1], p[3])                
+        p[0] = Assignment(content)
 
 def p_assignment_object(p):
     """
@@ -293,19 +326,4 @@ def p_error(p):
 # Inicialização do parser
 parser = yacc.yacc()
 
-parser.toml = TOML.TOML()
-parser.table = None
-parser.table_dict = False
-parser.table_list = False
 
-"""
-f = open('./TOML/toml5.toml','r')
-lines = f.readlines()
-result = ""
-for line in lines:  
-    result += str(parser.parse(line))
-
-print(result)
-#print(parser.toml.data)
-print(parser.toml.toJSON())
-"""

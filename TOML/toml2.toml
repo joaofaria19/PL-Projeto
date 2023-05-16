@@ -5,7 +5,7 @@ flt4 = 1e06
 flt5 = -2E-2
 sf1 = -inf
 sf2 = +nan
-odt1 = 1979-05-27T07:32:00Z
+odt1 = 1979-05-27T07:32:00
 odt2 = 1979-05-27T00:32:00-07:00
 odt3 = 1979-05-27T00:32:00.999999-07:00
 
@@ -28,6 +28,9 @@ type = { name = "Nail" }
 
 [[products]]
 name = "Hammer"
+sku = 738594937
+
+[[fruits.varieties]]
 sku = 738594937
 
 [[fruits.varieties]]

@@ -1,5 +1,23 @@
 import json
 
+
+"""
+    Classe Assignment para o tipo assignment detetado na gramática
+"""
+class Assignment:
+    def __init__(self,content):
+        self.content = content
+
+
+"""
+    Classe Table  para o tipo assignment detetado na gramática
+""" 
+class Table:
+    def __init__(self,name,type):
+        self.type = type
+        self.name = name
+        self.data = {}
+
 """
     Classe TOML como auxilio na gramática
 """
@@ -28,8 +46,6 @@ class TOML:
                 elif isinstance(self.data[key], list) and isinstance(value,list):
                     self.data[key].append(value[0])
                 elif isinstance(self.data[key], list):
-                    print(self.data[key][-1])
-                    print(value)
                     self.add_element_aux(self.data[key][-1], value)
                 else:
                     self.data[key] = value
@@ -62,7 +78,10 @@ class TOML:
                 if isinstance(value, dict) and isinstance(dict1[key], dict):
                     dict1[key] = self.add_element_aux(dict1[key], value)
                 elif isinstance(value, list):
-                    dict1[key].append(value[0])
+                    if len(value) > 0:
+                        dict1[key].append(value[0])
+                    else:
+                        dict1[key].append([])     
                 else:
                     dict1[key] = value
         return dict1
