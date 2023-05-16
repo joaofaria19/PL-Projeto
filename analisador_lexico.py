@@ -45,7 +45,7 @@ def t_error(t):
 
 lexer = lex.lex()
 
-f = open('./TOML/toml2.toml', 'r')
+"""f = open('./TOML/toml2.toml', 'r')
 lines = f.readlines()
 
 for line in lines:
@@ -55,3 +55,4 @@ for line in lines:
         if not tok:
             break  # No more input
         print(tok)
+"""

@@ -298,7 +298,7 @@ parser.table = None
 parser.table_dict = False
 parser.table_list = False
 
-
+"""
 f = open('./TOML/toml5.toml','r')
 lines = f.readlines()
 result = ""
@@ -308,4 +308,4 @@ for line in lines:
 print(result)
 #print(parser.toml.data)
 print(parser.toml.toJSON())
-
+"""

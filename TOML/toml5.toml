@@ -1,21 +1,6 @@
-[[fruits]]
-name = "apple"
-
-# subtable
-[fruits.physical]  
-color = "red"
-shape = "round"
-
-# nested array of tables
-[[fruits.varieties.summer]]  
-name = "red delicious"
-
-[[fruits.varieties.summer]]
-name = "granny smith"
-
-
-[[fruits]]
-name = "banana"
-
-[[fruits.varieties]]
-name = "plantain"
+first = "Tom"
+last = "Preston-Werner"
+apple = "red"
+apple = true
+name = "Regina Dogman"
+member_since = 1999-08-04
