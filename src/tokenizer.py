@@ -1,7 +1,14 @@
+import sys
 from analisador_lexico import lexer
 
-f = open('./TOML/toml2.toml', 'r')
-lines = f.readlines()
+
+lines=[]
+for line in sys.stdin:
+    lines.append(line)
+
+
+#f = open('./TOML/toml2.toml', 'r')
+#lines = f.readlines()
 
 for line in lines:
     lexer.input(line)

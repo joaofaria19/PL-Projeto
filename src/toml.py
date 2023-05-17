@@ -104,3 +104,10 @@ class TOML:
     """
     def toJSON(self):
         return json.dumps(self.data, indent=4, ensure_ascii=False)
+    
+    """
+        Função para transformar o dicionário em python num objeto JSON
+    """
+    def toFile(self):
+        return json.dumps(self.data, indent=4, ensure_ascii=False)
+    

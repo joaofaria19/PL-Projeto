@@ -1,6 +1,5 @@
 import ply.yacc as yacc
 import analisador_lexico as lexer
-import toml as toml
 from toml import Assignment
 from toml import Table
 
@@ -185,7 +184,6 @@ def p_conteudo_lista(p):
         p[0] = [p[1]] 
     else: 
         p[0] = [p[1]] + p[3]
-
 
 def p_object(p):
     """
