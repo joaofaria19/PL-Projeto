@@ -6,8 +6,6 @@ from toml import Table
 
 tokens = lexer.tokens
 
-
-
 start = 'program'
 
 def p_program(p):
@@ -170,7 +168,8 @@ def p_elemento_var(p):
 def p_lista(p):
     """
         lista : LEFTSQUAREBRACKET RIGHTSQUAREBRACKET
-            | LEFTSQUAREBRACKET ContList RIGHTSQUAREBRACKET
+            | LEFTSQUAREBRACKET conteudo_lista RIGHTSQUAREBRACKET
+            | LEFTSQUAREBRACKET conteudo_lista COMMA RIGHTSQUAREBRACKET     
     """
     if len(p) == 2:
         p[0] = []
@@ -179,38 +178,29 @@ def p_lista(p):
 
 def p_conteudo_lista(p):
     """
-        ContList : elemento
-                | elemento ContList2
+        conteudo_lista : elemento 
+                    | elemento COMMA conteudo_lista
     """
     if len(p) == 2:
         p[0] = [p[1]] 
     else: 
-        p[0] = [p[1]] + p[2]
+        p[0] = [p[1]] + p[3]
 
-def p_conteudo_lista2(p):
-    """
-    ContList2 : COMMA 
-            | COMMA ContList
-    """
-    if len(p) == 2:
-        p[0] = p[1]
-    else: 
-        p[0] = p[2]
 
 def p_object(p):
     """
         object : LEFTBRACKET RIGHTBRACKET
-                | LEFTBRACKET ContObject RIGHTBRACKET
+                | LEFTBRACKET conteudo_object RIGHTBRACKET
     """
     if len(p) == 2:
         p[0] = {}
     else:  
-        p[0] = p[2] 
+        p[0] = p[2]
 
 def p_conteudo_object(p):
     """
-        ContObject : assignment_object
-                | assignment_object COMMA ContObject
+        conteudo_object : assignment_object
+                | assignment_object COMMA conteudo_object
     """
     if len(p) == 2:
         p[0] = p[1]
@@ -219,8 +209,7 @@ def p_conteudo_object(p):
 
 def p_elemento(p):
     """
-        elemento : 
-             | int
+        elemento : int
              | float
              | inf
              | nan
@@ -228,6 +217,7 @@ def p_elemento(p):
              | binary
              | octal
              | string
+             | mstring
              | boolean
              | date
              | time
@@ -237,6 +227,12 @@ def p_elemento(p):
              | object
     """
     p[0] = p[1]
+
+def p_mstring(p):
+    """
+        mstring : MSTRING
+    """
+    p[0] =  p[1][1:-1]
 
 def p_string(p):
     """

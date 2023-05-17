@@ -1,6 +1,5 @@
 import json
 
-
 """
     Classe Assignment para o tipo assignment detetado na gramática
 """
@@ -10,7 +9,7 @@ class Assignment:
 
 
 """
-    Classe Table  para o tipo assignment detetado na gramática
+    Classe Table  para o tipo table detetado na gramática
 """ 
 class Table:
     def __init__(self,name,type):

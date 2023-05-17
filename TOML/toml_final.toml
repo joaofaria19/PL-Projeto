@@ -1,3 +1,5 @@
+tittle = "TOML example"
+
 [[fruits]]
 name = "apple"
 

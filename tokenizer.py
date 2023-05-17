@@ -1,6 +1,6 @@
 from analisador_lexico import lexer
 
-f = open('./TOML/toml.toml', 'r')
+f = open('./TOML/toml2.toml', 'r')
 lines = f.readlines()
 
 for line in lines:
