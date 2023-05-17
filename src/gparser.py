@@ -24,5 +24,5 @@ parser.parse(result)
 
 print(parser.toml.toJSON())
 
-with open('./out/result.json','w') as file:
+with open('../out/result.json','w') as file:
     file.write(parser.toml.toJSON())
