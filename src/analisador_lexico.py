@@ -2,7 +2,7 @@ import ply.lex as lex
 
 tokens = ('COMMENT', 'COMMA', 'DOT', 'VAR',
           'LEFTBRACKET', 'RIGHTBRACKET', 'LEFTSQUAREBRACKET', 'RIGHTSQUAREBRACKET',
-          'EQUAL', 'DATE', 'INT', 'FLOAT', 'INF', 'NAN', 'STRING', 'MSTRING', 'BOOLEAN',
+          'EQUAL', 'DATE', 'INT', 'FLOAT', 'INF', 'NAN', 'STRING', 'MSTRING', 'MLSTRING', 'BOOLEAN',
           'TIME', 'DATETIME', 'OFFSET', 'OFFSETDATETIME', 'HEXADECIMAL', 'BINARY', 'OCTAL',
           'NEWLINE')
 
@@ -17,6 +17,7 @@ t_EQUAL = r'\='
 t_BOOLEAN = r'(false|true)'
 t_STRING = r'(\"[^"]+\")'
 t_MSTRING = r'\"\"\"[^\"]*\"\"\"'
+t_MLSTRING = r'\'\'\'[^\']*\'\'\''
 t_INT = r'[\+\-]?(0|[1-9](\_?[0-9])*)'
 t_FLOAT = r'[\+\-]?(0|[1-9](\_?[0-9])*)(\.[0-9](\_?[0-9])*([eE][\+\-]?[0-9](\_?[0-9])*)?|[eE][\+\-]?[0-9](\_?[0-9])*)'
 t_INF = r'[\+\-]?inf'
