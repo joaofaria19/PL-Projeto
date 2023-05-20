@@ -29,10 +29,11 @@ t_VAR = r'(\w+|\-)+'
 t_COMMENT = r'\#\s*.*'
 t_ignore = ' \t'
 
+
+#Definições em funções para respeitar prioridades
 def t_TIME(t):
     r'\d{2}:\d{2}:\d{2}(\.\d{6})?'
     return t
-
 
 def t_OFFSETDATETIME  (t):
     r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{6})? [+-]\d{2}:\d{2}'
