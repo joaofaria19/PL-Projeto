@@ -63,6 +63,7 @@ def p_statement(p):
                 | comment
                 | newline
     """
+    p.parser.size +=1
     p[0] = p[1]
     
 def p_newline(p):
@@ -91,10 +92,10 @@ def p_header1(p):
             | LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET COMMENT
     """
     if len(p) == 4:
-        if p.lexer.lineno == p.parser.length:
+        if p.lexer.lineno == p.parser.size:
             p[0] = Table(p[2],'table_dict')
         else:
-            raise Exception(f'Unexpected character, expected only newlines or comments till end of line at row {p.lexer.lineno}')
+            raise Exception(f'Unexpected character, table expected only newlines or comments till end of line at row {p.lexer.lineno}')
     
     else:
         p[0] = Table(p[2],'table_dict')
@@ -107,10 +108,10 @@ def p_header2(p):
     
     """
     if len(p) == 6:
-        if p.lexer.lineno == p.parser.length:
+        if p.lexer.lineno == p.parser.size:
             p[0] = Table(p[3],'table_list')
         else:
-            raise Exception(f'Unexpected character, expected only newlines or comments till end of line at row {p.lexer.lineno}')
+            raise Exception(f'Unexpected character, table expected only newlines or comments till end of line at row {p.lexer.lineno}')
     
     else:
         p[0] = Table(p[3],'table_list')
@@ -121,18 +122,18 @@ def p_assignment(p):
                 | name EQUAL elemento NEWLINE
     """
     if len(p) == 4:
-        if p.lexer.lineno == p.parser.length:
+        if p.parser.size == p.lexer.lineno:
             content = p.parser.toml.new_assignment(p[1], p[3])
             p[0] = Assignment(content)
         else:
-            raise Exception(f'Unexpected character, expected only newlines or comments till end of line at row {p.lexer.lineno}')
+            raise Exception(f'Unexpected character, assignment expected only newlines or comments till end of line')
     else:
         content = p.parser.toml.new_assignment(p[1], p[3])                
         p[0] = Assignment(content)
 
 def p_assignment_object(p):
     """
-        assignment_object : name EQUAL elemento
+        assignment_object : name EQUAL elemento 
     """
     p[0] = p.parser.toml.new_assignment(p[1],p[3])
 
@@ -216,6 +217,8 @@ def p_elemento(p):
              | octal
              | string
              | mstring
+             | lstring
+             | mlstring
              | boolean
              | date
              | time
@@ -230,13 +233,30 @@ def p_mstring(p):
     """
         mstring : MSTRING
     """
-    p[0] =  p[1][1:-1]
+    print("MultiLine" + p[1])
+    p[0] =  str(p[1][3:-3])
+    print(p[0])
+
+def p_mlstring(p):
+    """
+        mlstring : MLSTRING
+    """
+    p[0] =  str(p[1][3:-3])
+
 
 def p_string(p):
     """
         string : STRING
     """
     p[0] =  p[1][1:-1]
+
+
+def p_lstring(p):
+    """
+        lstring : LITERALSTRING
+    """
+    p[0] =  p[1][1:-1]
+
 
 def p_number(p):
     """

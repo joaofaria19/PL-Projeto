@@ -7,15 +7,15 @@ parser.table_token = False
 parser.table = None
 parser.stack = []
 parser.final = []
+parser.size = 1
 
 lines=[]
 for line in sys.stdin:
     lines.append(line)
 
-#f=open("../TOML/toml2.toml",'r')
+#f=open("./TOML/toml2.toml",'r')
 #lines = f.readlines()
 
-parser.length = len(lines)
 result=""
 for line in lines:
     result+=line
@@ -24,5 +24,5 @@ parser.parse(result)
 
 print(parser.toml.toJSON())
 
-with open('../out/result.json','w') as file:
+with open('./out/result.json','w') as file:
     file.write(parser.toml.toJSON())

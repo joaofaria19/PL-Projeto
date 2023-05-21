@@ -9,6 +9,7 @@
     "odt1": "979-05-27T07:32:0",
     "odt2": "979-05-27T00:32:00-07:0",
     "odt3": "979-05-27T00:32:00.999999-07:0",
+    "mullinestring": "\n    Ola \n    Adeus \n",
     "contributors": [
         "Foo Bar <foo@example.com>",
         {

@@ -31,7 +31,6 @@ t_VAR = r'(\w+|\-)+'
 t_COMMENT = r'\#\s*.*'
 t_ignore = ' \t'
 
-
 #Definições em funções para respeitar prioridades
 def t_TIME(t):
     r'\d{2}:\d{2}:\d{2}(\.\d{6})?'
