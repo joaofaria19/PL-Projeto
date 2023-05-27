@@ -233,15 +233,14 @@ def p_mstring(p):
     """
         mstring : MSTRING
     """
-    print("MultiLine" + p[1])
-    p[0] =  str(p[1][3:-3])
-    print(p[0])
+    p[0] =  p[1][3:-3]
+
 
 def p_mlstring(p):
     """
         mlstring : MLSTRING
     """
-    p[0] =  str(p[1][3:-3])
+    p[0] =  p[1][3:-3]
 
 
 def p_string(p):
