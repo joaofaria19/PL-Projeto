@@ -298,7 +298,11 @@ def p_boolean(p):
     """
         boolean : BOOLEAN
     """
-    p[0] = bool(p[1])
+    if p[1] == "true":
+        p[0] = True
+    else: 
+        p[0] = False
+        
 
 def p_date(p):
     """
