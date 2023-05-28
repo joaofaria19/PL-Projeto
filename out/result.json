@@ -1,21 +1,32 @@
 {
-    "pontos": [
-        {
-            "x": 1,
-            "y": 2,
-            "z": 3
+    "title": "TOML Example",
+    "owner": {
+        "name": "Tom Preston-Werner",
+        "date": "010-04-2",
+        "time": "1:30:0"
+    },
+    "database": {
+        "server": "192.168.1.1",
+        "ports": [
+            8001,
+            8001,
+            8002
+        ],
+        "connection_max": 5000,
+        "enabled": true
+    },
+    "servers": {
+        "alpha": {
+            "ip": "10.0.0.1",
+            "dc": "eqdc10"
         },
-        {
-            "x": 7,
-            "y": 8,
-            "z": 9
-        },
-        {
-            "x": 2,
-            "y": 4,
-            "z": 8
+        "beta": {
+            "ip": "10.0.0.2",
+            "dc": "eqdc10",
+            "hosts": [
+                "alpha",
+                "omega"
+            ]
         }
-    ],
-    "boolean2": false,
-    "boolean3": true
+    }
 }

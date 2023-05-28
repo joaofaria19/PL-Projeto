@@ -167,23 +167,41 @@ def p_elemento_var(p):
 def p_lista(p):
     """
         lista : LEFTSQUAREBRACKET RIGHTSQUAREBRACKET
-            | LEFTSQUAREBRACKET conteudo_lista RIGHTSQUAREBRACKET
-            | LEFTSQUAREBRACKET conteudo_lista COMMA RIGHTSQUAREBRACKET     
+            | LEFTSQUAREBRACKET NEWLINE lista2 RIGHTSQUAREBRACKET
+            | LEFTSQUAREBRACKET lista2 RIGHTSQUAREBRACKET     
     """
     if len(p) == 2:
         p[0] = []
+    elif len(p) == 5:
+        p.parser.size += 1
+        p[0] = p[3]
     else:  
         p[0] = p[2]
 
+def p_lista2(p):
+    """
+        lista2 : conteudo_lista
+                | conteudo_lista COMMA     
+    """
+    p[0] = p[1]    
+
 def p_conteudo_lista(p):
     """
-        conteudo_lista : elemento
+        conteudo_lista : elemento 
+                | elemento NEWLINE
                 | elemento COMMA conteudo_lista
+                | elemento COMMA NEWLINE conteudo_lista
     """
-    if len(p) == 2:
+    if len(p) == 3:
+        p.parser.size+=1
         p[0] = [p[1]] 
-    else: 
+    elif len(p) == 5:
+        p.parser.size+=1
+        p[0] = [p[1]] + p[4]
+    elif len(p) == 4:
         p[0] = [p[1]] + p[3]
+    else: 
+        p[0] = [p[1]] 
 
 def p_object(p):
     """
