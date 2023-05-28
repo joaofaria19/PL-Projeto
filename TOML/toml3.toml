@@ -1,13 +1,13 @@
-["arroz".23."false"]
+["legumes"]
 
-["sopa"]
+["batatas"."vermelha".quantidade]
 
-["batata".2."couve".5]
+["batatas"."branca".quantidade]
 
-[[nome2]]
+[[bebidas]]
 
 [variavel1.variavel2.variavel3]
-nome = "asasa"
-idade = 1212
+nome = "variavel"
+idade = 1
 
-[nome."Augusto"]
+[nome."primeiro".1]

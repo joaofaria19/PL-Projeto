@@ -2,13 +2,13 @@ tittle = "TOML EXAMPLE"
 
 [person]
 name.proprio = "John"
-name.secundario = "Doe"
+name.apelido = "Doe"
 age.birth = 30
 
 [animal]
 type = "raposa"
 pet_name = "coccy"
-pet_age = 12
+pet_age = 8
 
 [animal.pet]
 type = "dog"
@@ -20,6 +20,4 @@ street = "123 Main St"
 city = "Anytown"
 state = "CA"
 zip = 12345
-mylist = [0,false,"falso"]
-pessoa = { nome = "Nail", idade = 24 }
-final = true
+habitantes = [{ nome = "Alex", idade = 24 }]

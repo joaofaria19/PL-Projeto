@@ -1,6 +1,3 @@
-first = "Tom"
-last = "Preston-Werner"
-apple = "red"
-apple = true
-name = "Regina Dogman"
-member_since = 1999-08-04
+pontos = [ { x = 1, y = 2, z = 3 },
+           { x = 7, y = 8, z = 9 },
+           { x = 2, y = 4, z = 8 } ]
