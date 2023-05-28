@@ -28,20 +28,19 @@ def p_statements(p):
         p.parser.stack.append(p[1].content)
         p.parser.table_token = False
     elif isinstance(p[1],Table):
-        p.parser.table = p[1]
         if p[1].type == 'table_dict':
-            name = p.parser.table.name
+            name = p[1].name
             if p.parser.table_token:
                 obj = p.parser.toml.new_assignment(name,{})
                 p.parser.final.insert(0,obj)
             else:
                 for assg in reversed(p.parser.stack):
-                    p.parser.toml.add_element_table(p.parser.table.data,assg)
-                data = p.parser.table.data
+                    p.parser.toml.add_element_table(p[1].data,assg)
+                data = p[1].data
                 obj = p.parser.toml.new_assignment(name,data)
                 p.parser.final.insert(0,obj)
         elif p[1].type == 'table_list':
-            name = p.parser.table.name
+            name = p[1].name
             if p.parser.table_token:
                 obj = p.parser.toml.new_assignment(name,[])
                 p.parser.final.insert(0,obj)
@@ -161,7 +160,6 @@ def p_elemento_var(p):
     """
         elementoVar : VAR
                     | string
-                    | int
     """
     p[0] = p[1]
 

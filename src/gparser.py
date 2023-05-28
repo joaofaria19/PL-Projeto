@@ -4,7 +4,6 @@ from analisador_sintatico import parser
 
 parser.toml = toml.TOML()
 parser.table_token = False
-parser.table = None
 parser.stack = []
 parser.final = []
 parser.size = 1
