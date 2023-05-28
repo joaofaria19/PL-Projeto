@@ -15,7 +15,7 @@ Rule 5     statement -> assignment
 Rule 6     statement -> comment
 Rule 7     statement -> newline
 Rule 8     newline -> NEWLINE
-Rule 9     comment -> COMMENT
+Rule 9     comment -> COMMENT NEWLINE
 Rule 10    table -> header1
 Rule 11    table -> header2
 Rule 12    header1 -> LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET
@@ -98,7 +98,7 @@ LITERALSTRING        : 58
 MLSTRING             : 56
 MSTRING              : 55
 NAN                  : 62
-NEWLINE              : 8 13 16 19
+NEWLINE              : 8 9 13 16 19
 OCTAL                : 65
 OFFSET               : 
 OFFSETDATETIME       : 70
@@ -162,7 +162,7 @@ state 0
     (11) table -> . header2
     (18) assignment -> . name EQUAL elemento
     (19) assignment -> . name EQUAL elemento NEWLINE
-    (9) comment -> . COMMENT
+    (9) comment -> . COMMENT NEWLINE
     (8) newline -> . NEWLINE
     (12) header1 -> . LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET
     (13) header1 -> . LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET NEWLINE
@@ -226,7 +226,7 @@ state 3
     (11) table -> . header2
     (18) assignment -> . name EQUAL elemento
     (19) assignment -> . name EQUAL elemento NEWLINE
-    (9) comment -> . COMMENT
+    (9) comment -> . COMMENT NEWLINE
     (8) newline -> . NEWLINE
     (12) header1 -> . LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET
     (13) header1 -> . LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET NEWLINE
@@ -364,15 +364,9 @@ state 11
 
 state 12
 
-    (9) comment -> COMMENT .
+    (9) comment -> COMMENT . NEWLINE
 
-    COMMENT         reduce using rule 9 (comment -> COMMENT .)
-    NEWLINE         reduce using rule 9 (comment -> COMMENT .)
-    LEFTSQUAREBRACKET reduce using rule 9 (comment -> COMMENT .)
-    VAR             reduce using rule 9 (comment -> COMMENT .)
-    STRING          reduce using rule 9 (comment -> COMMENT .)
-    INT             reduce using rule 9 (comment -> COMMENT .)
-    $end            reduce using rule 9 (comment -> COMMENT .)
+    NEWLINE         shift and go to state 22
 
 
 state 13
@@ -391,12 +385,12 @@ state 13
     (57) string -> . STRING
     (59) int -> . INT
 
-    LEFTSQUAREBRACKET shift and go to state 22
+    LEFTSQUAREBRACKET shift and go to state 23
     VAR             shift and go to state 15
     STRING          shift and go to state 18
     INT             shift and go to state 19
 
-    name                           shift and go to state 23
+    name                           shift and go to state 24
     elementoVar                    shift and go to state 14
     string                         shift and go to state 16
     int                            shift and go to state 17
@@ -410,9 +404,9 @@ state 14
 
     EQUAL           reduce using rule 21 (name -> elementoVar .)
     RIGHTSQUAREBRACKET reduce using rule 21 (name -> elementoVar .)
-    DOT             shift and go to state 25
+    DOT             shift and go to state 26
 
-    name2                          shift and go to state 24
+    name2                          shift and go to state 25
 
 state 15
 
@@ -529,45 +523,58 @@ state 21
     (34) object -> . LEFTBRACKET conteudo_object RIGHTBRACKET
 
     INT             shift and go to state 19
-    FLOAT           shift and go to state 45
-    INF             shift and go to state 46
-    NAN             shift and go to state 47
-    HEXADECIMAL     shift and go to state 48
-    BINARY          shift and go to state 49
-    OCTAL           shift and go to state 50
+    FLOAT           shift and go to state 46
+    INF             shift and go to state 47
+    NAN             shift and go to state 48
+    HEXADECIMAL     shift and go to state 49
+    BINARY          shift and go to state 50
+    OCTAL           shift and go to state 51
     STRING          shift and go to state 18
-    MSTRING         shift and go to state 51
-    LITERALSTRING   shift and go to state 52
-    MLSTRING        shift and go to state 53
-    BOOLEAN         shift and go to state 54
-    DATE            shift and go to state 55
-    TIME            shift and go to state 56
-    DATETIME        shift and go to state 57
-    OFFSETDATETIME  shift and go to state 58
-    LEFTSQUAREBRACKET shift and go to state 59
-    LEFTBRACKET     shift and go to state 60
+    MSTRING         shift and go to state 52
+    LITERALSTRING   shift and go to state 53
+    MLSTRING        shift and go to state 54
+    BOOLEAN         shift and go to state 55
+    DATE            shift and go to state 56
+    TIME            shift and go to state 57
+    DATETIME        shift and go to state 58
+    OFFSETDATETIME  shift and go to state 59
+    LEFTSQUAREBRACKET shift and go to state 60
+    LEFTBRACKET     shift and go to state 61
 
-    elemento                       shift and go to state 26
-    int                            shift and go to state 27
-    float                          shift and go to state 28
-    inf                            shift and go to state 29
-    nan                            shift and go to state 30
-    hexadecimal                    shift and go to state 31
-    binary                         shift and go to state 32
-    octal                          shift and go to state 33
-    string                         shift and go to state 34
-    mstring                        shift and go to state 35
-    lstring                        shift and go to state 36
-    mlstring                       shift and go to state 37
-    boolean                        shift and go to state 38
-    date                           shift and go to state 39
-    time                           shift and go to state 40
-    datetime                       shift and go to state 41
-    offset_datetime                shift and go to state 42
-    lista                          shift and go to state 43
-    object                         shift and go to state 44
+    elemento                       shift and go to state 27
+    int                            shift and go to state 28
+    float                          shift and go to state 29
+    inf                            shift and go to state 30
+    nan                            shift and go to state 31
+    hexadecimal                    shift and go to state 32
+    binary                         shift and go to state 33
+    octal                          shift and go to state 34
+    string                         shift and go to state 35
+    mstring                        shift and go to state 36
+    lstring                        shift and go to state 37
+    mlstring                       shift and go to state 38
+    boolean                        shift and go to state 39
+    date                           shift and go to state 40
+    time                           shift and go to state 41
+    datetime                       shift and go to state 42
+    offset_datetime                shift and go to state 43
+    lista                          shift and go to state 44
+    object                         shift and go to state 45
 
 state 22
+
+    (9) comment -> COMMENT NEWLINE .
+
+    COMMENT         reduce using rule 9 (comment -> COMMENT NEWLINE .)
+    NEWLINE         reduce using rule 9 (comment -> COMMENT NEWLINE .)
+    LEFTSQUAREBRACKET reduce using rule 9 (comment -> COMMENT NEWLINE .)
+    VAR             reduce using rule 9 (comment -> COMMENT NEWLINE .)
+    STRING          reduce using rule 9 (comment -> COMMENT NEWLINE .)
+    INT             reduce using rule 9 (comment -> COMMENT NEWLINE .)
+    $end            reduce using rule 9 (comment -> COMMENT NEWLINE .)
+
+
+state 23
 
     (15) header2 -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET . name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET
     (16) header2 -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET . name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET NEWLINE
@@ -584,21 +591,21 @@ state 22
     STRING          shift and go to state 18
     INT             shift and go to state 19
 
-    name                           shift and go to state 61
+    name                           shift and go to state 62
     elementoVar                    shift and go to state 14
     string                         shift and go to state 16
     int                            shift and go to state 17
 
-state 23
+state 24
 
     (12) header1 -> LEFTSQUAREBRACKET name . RIGHTSQUAREBRACKET
     (13) header1 -> LEFTSQUAREBRACKET name . RIGHTSQUAREBRACKET NEWLINE
     (14) header1 -> LEFTSQUAREBRACKET name . RIGHTSQUAREBRACKET COMMENT
 
-    RIGHTSQUAREBRACKET shift and go to state 62
+    RIGHTSQUAREBRACKET shift and go to state 63
 
 
-state 24
+state 25
 
     (22) name -> elementoVar name2 .
 
@@ -606,7 +613,7 @@ state 24
     RIGHTSQUAREBRACKET reduce using rule 22 (name -> elementoVar name2 .)
 
 
-state 25
+state 26
 
     (23) name2 -> DOT . elementoVar
     (24) name2 -> DOT . elementoVar name2
@@ -620,11 +627,11 @@ state 25
     STRING          shift and go to state 18
     INT             shift and go to state 19
 
-    elementoVar                    shift and go to state 63
+    elementoVar                    shift and go to state 64
     string                         shift and go to state 16
     int                            shift and go to state 17
 
-state 26
+state 27
 
     (18) assignment -> name EQUAL elemento .
     (19) assignment -> name EQUAL elemento . NEWLINE
@@ -636,12 +643,12 @@ state 26
     STRING          reduce using rule 18 (assignment -> name EQUAL elemento .)
     INT             reduce using rule 18 (assignment -> name EQUAL elemento .)
     $end            reduce using rule 18 (assignment -> name EQUAL elemento .)
-    NEWLINE         shift and go to state 64
+    NEWLINE         shift and go to state 65
 
   ! NEWLINE         [ reduce using rule 18 (assignment -> name EQUAL elemento .) ]
 
 
-state 27
+state 28
 
     (37) elemento -> int .
 
@@ -657,7 +664,7 @@ state 27
     RIGHTBRACKET    reduce using rule 37 (elemento -> int .)
 
 
-state 28
+state 29
 
     (38) elemento -> float .
 
@@ -673,7 +680,7 @@ state 28
     RIGHTBRACKET    reduce using rule 38 (elemento -> float .)
 
 
-state 29
+state 30
 
     (39) elemento -> inf .
 
@@ -689,7 +696,7 @@ state 29
     RIGHTBRACKET    reduce using rule 39 (elemento -> inf .)
 
 
-state 30
+state 31
 
     (40) elemento -> nan .
 
@@ -705,7 +712,7 @@ state 30
     RIGHTBRACKET    reduce using rule 40 (elemento -> nan .)
 
 
-state 31
+state 32
 
     (41) elemento -> hexadecimal .
 
@@ -721,7 +728,7 @@ state 31
     RIGHTBRACKET    reduce using rule 41 (elemento -> hexadecimal .)
 
 
-state 32
+state 33
 
     (42) elemento -> binary .
 
@@ -737,7 +744,7 @@ state 32
     RIGHTBRACKET    reduce using rule 42 (elemento -> binary .)
 
 
-state 33
+state 34
 
     (43) elemento -> octal .
 
@@ -753,7 +760,7 @@ state 33
     RIGHTBRACKET    reduce using rule 43 (elemento -> octal .)
 
 
-state 34
+state 35
 
     (44) elemento -> string .
 
@@ -769,7 +776,7 @@ state 34
     RIGHTBRACKET    reduce using rule 44 (elemento -> string .)
 
 
-state 35
+state 36
 
     (45) elemento -> mstring .
 
@@ -785,7 +792,7 @@ state 35
     RIGHTBRACKET    reduce using rule 45 (elemento -> mstring .)
 
 
-state 36
+state 37
 
     (46) elemento -> lstring .
 
@@ -801,7 +808,7 @@ state 36
     RIGHTBRACKET    reduce using rule 46 (elemento -> lstring .)
 
 
-state 37
+state 38
 
     (47) elemento -> mlstring .
 
@@ -817,7 +824,7 @@ state 37
     RIGHTBRACKET    reduce using rule 47 (elemento -> mlstring .)
 
 
-state 38
+state 39
 
     (48) elemento -> boolean .
 
@@ -833,7 +840,7 @@ state 38
     RIGHTBRACKET    reduce using rule 48 (elemento -> boolean .)
 
 
-state 39
+state 40
 
     (49) elemento -> date .
 
@@ -849,7 +856,7 @@ state 39
     RIGHTBRACKET    reduce using rule 49 (elemento -> date .)
 
 
-state 40
+state 41
 
     (50) elemento -> time .
 
@@ -865,7 +872,7 @@ state 40
     RIGHTBRACKET    reduce using rule 50 (elemento -> time .)
 
 
-state 41
+state 42
 
     (51) elemento -> datetime .
 
@@ -881,7 +888,7 @@ state 41
     RIGHTBRACKET    reduce using rule 51 (elemento -> datetime .)
 
 
-state 42
+state 43
 
     (52) elemento -> offset_datetime .
 
@@ -897,7 +904,7 @@ state 42
     RIGHTBRACKET    reduce using rule 52 (elemento -> offset_datetime .)
 
 
-state 43
+state 44
 
     (53) elemento -> lista .
 
@@ -913,7 +920,7 @@ state 43
     RIGHTBRACKET    reduce using rule 53 (elemento -> lista .)
 
 
-state 44
+state 45
 
     (54) elemento -> object .
 
@@ -929,7 +936,7 @@ state 44
     RIGHTBRACKET    reduce using rule 54 (elemento -> object .)
 
 
-state 45
+state 46
 
     (60) float -> FLOAT .
 
@@ -945,7 +952,7 @@ state 45
     RIGHTBRACKET    reduce using rule 60 (float -> FLOAT .)
 
 
-state 46
+state 47
 
     (61) inf -> INF .
 
@@ -961,7 +968,7 @@ state 46
     RIGHTBRACKET    reduce using rule 61 (inf -> INF .)
 
 
-state 47
+state 48
 
     (62) nan -> NAN .
 
@@ -977,7 +984,7 @@ state 47
     RIGHTBRACKET    reduce using rule 62 (nan -> NAN .)
 
 
-state 48
+state 49
 
     (63) hexadecimal -> HEXADECIMAL .
 
@@ -993,7 +1000,7 @@ state 48
     RIGHTBRACKET    reduce using rule 63 (hexadecimal -> HEXADECIMAL .)
 
 
-state 49
+state 50
 
     (64) binary -> BINARY .
 
@@ -1009,7 +1016,7 @@ state 49
     RIGHTBRACKET    reduce using rule 64 (binary -> BINARY .)
 
 
-state 50
+state 51
 
     (65) octal -> OCTAL .
 
@@ -1025,7 +1032,7 @@ state 50
     RIGHTBRACKET    reduce using rule 65 (octal -> OCTAL .)
 
 
-state 51
+state 52
 
     (55) mstring -> MSTRING .
 
@@ -1041,7 +1048,7 @@ state 51
     RIGHTBRACKET    reduce using rule 55 (mstring -> MSTRING .)
 
 
-state 52
+state 53
 
     (58) lstring -> LITERALSTRING .
 
@@ -1057,7 +1064,7 @@ state 52
     RIGHTBRACKET    reduce using rule 58 (lstring -> LITERALSTRING .)
 
 
-state 53
+state 54
 
     (56) mlstring -> MLSTRING .
 
@@ -1073,7 +1080,7 @@ state 53
     RIGHTBRACKET    reduce using rule 56 (mlstring -> MLSTRING .)
 
 
-state 54
+state 55
 
     (66) boolean -> BOOLEAN .
 
@@ -1089,7 +1096,7 @@ state 54
     RIGHTBRACKET    reduce using rule 66 (boolean -> BOOLEAN .)
 
 
-state 55
+state 56
 
     (67) date -> DATE .
 
@@ -1105,7 +1112,7 @@ state 55
     RIGHTBRACKET    reduce using rule 67 (date -> DATE .)
 
 
-state 56
+state 57
 
     (68) time -> TIME .
 
@@ -1121,7 +1128,7 @@ state 56
     RIGHTBRACKET    reduce using rule 68 (time -> TIME .)
 
 
-state 57
+state 58
 
     (69) datetime -> DATETIME .
 
@@ -1137,7 +1144,7 @@ state 57
     RIGHTBRACKET    reduce using rule 69 (datetime -> DATETIME .)
 
 
-state 58
+state 59
 
     (70) offset_datetime -> OFFSETDATETIME .
 
@@ -1153,7 +1160,7 @@ state 58
     RIGHTBRACKET    reduce using rule 70 (offset_datetime -> OFFSETDATETIME .)
 
 
-state 59
+state 60
 
     (28) lista -> LEFTSQUAREBRACKET . RIGHTSQUAREBRACKET
     (29) lista -> LEFTSQUAREBRACKET . conteudo_lista RIGHTSQUAREBRACKET
@@ -1200,48 +1207,48 @@ state 59
     (33) object -> . LEFTBRACKET RIGHTBRACKET
     (34) object -> . LEFTBRACKET conteudo_object RIGHTBRACKET
 
-    RIGHTSQUAREBRACKET shift and go to state 65
+    RIGHTSQUAREBRACKET shift and go to state 66
     INT             shift and go to state 19
-    FLOAT           shift and go to state 45
-    INF             shift and go to state 46
-    NAN             shift and go to state 47
-    HEXADECIMAL     shift and go to state 48
-    BINARY          shift and go to state 49
-    OCTAL           shift and go to state 50
+    FLOAT           shift and go to state 46
+    INF             shift and go to state 47
+    NAN             shift and go to state 48
+    HEXADECIMAL     shift and go to state 49
+    BINARY          shift and go to state 50
+    OCTAL           shift and go to state 51
     STRING          shift and go to state 18
-    MSTRING         shift and go to state 51
-    LITERALSTRING   shift and go to state 52
-    MLSTRING        shift and go to state 53
-    BOOLEAN         shift and go to state 54
-    DATE            shift and go to state 55
-    TIME            shift and go to state 56
-    DATETIME        shift and go to state 57
-    OFFSETDATETIME  shift and go to state 58
-    LEFTSQUAREBRACKET shift and go to state 59
-    LEFTBRACKET     shift and go to state 60
+    MSTRING         shift and go to state 52
+    LITERALSTRING   shift and go to state 53
+    MLSTRING        shift and go to state 54
+    BOOLEAN         shift and go to state 55
+    DATE            shift and go to state 56
+    TIME            shift and go to state 57
+    DATETIME        shift and go to state 58
+    OFFSETDATETIME  shift and go to state 59
+    LEFTSQUAREBRACKET shift and go to state 60
+    LEFTBRACKET     shift and go to state 61
 
-    conteudo_lista                 shift and go to state 66
-    elemento                       shift and go to state 67
-    int                            shift and go to state 27
-    float                          shift and go to state 28
-    inf                            shift and go to state 29
-    nan                            shift and go to state 30
-    hexadecimal                    shift and go to state 31
-    binary                         shift and go to state 32
-    octal                          shift and go to state 33
-    string                         shift and go to state 34
-    mstring                        shift and go to state 35
-    lstring                        shift and go to state 36
-    mlstring                       shift and go to state 37
-    boolean                        shift and go to state 38
-    date                           shift and go to state 39
-    time                           shift and go to state 40
-    datetime                       shift and go to state 41
-    offset_datetime                shift and go to state 42
-    lista                          shift and go to state 43
-    object                         shift and go to state 44
+    conteudo_lista                 shift and go to state 67
+    elemento                       shift and go to state 68
+    int                            shift and go to state 28
+    float                          shift and go to state 29
+    inf                            shift and go to state 30
+    nan                            shift and go to state 31
+    hexadecimal                    shift and go to state 32
+    binary                         shift and go to state 33
+    octal                          shift and go to state 34
+    string                         shift and go to state 35
+    mstring                        shift and go to state 36
+    lstring                        shift and go to state 37
+    mlstring                       shift and go to state 38
+    boolean                        shift and go to state 39
+    date                           shift and go to state 40
+    time                           shift and go to state 41
+    datetime                       shift and go to state 42
+    offset_datetime                shift and go to state 43
+    lista                          shift and go to state 44
+    object                         shift and go to state 45
 
-state 60
+state 61
 
     (33) object -> LEFTBRACKET . RIGHTBRACKET
     (34) object -> LEFTBRACKET . conteudo_object RIGHTBRACKET
@@ -1256,28 +1263,28 @@ state 60
     (57) string -> . STRING
     (59) int -> . INT
 
-    RIGHTBRACKET    shift and go to state 68
+    RIGHTBRACKET    shift and go to state 69
     VAR             shift and go to state 15
     STRING          shift and go to state 18
     INT             shift and go to state 19
 
-    conteudo_object                shift and go to state 69
-    assignment_object              shift and go to state 70
-    name                           shift and go to state 71
+    conteudo_object                shift and go to state 70
+    assignment_object              shift and go to state 71
+    name                           shift and go to state 72
     elementoVar                    shift and go to state 14
     string                         shift and go to state 16
     int                            shift and go to state 17
 
-state 61
+state 62
 
     (15) header2 -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET name . RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET
     (16) header2 -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET name . RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET NEWLINE
     (17) header2 -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET name . RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET COMMENT
 
-    RIGHTSQUAREBRACKET shift and go to state 72
+    RIGHTSQUAREBRACKET shift and go to state 73
 
 
-state 62
+state 63
 
     (12) header1 -> LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET .
     (13) header1 -> LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET . NEWLINE
@@ -1290,14 +1297,14 @@ state 62
     STRING          reduce using rule 12 (header1 -> LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET .)
     INT             reduce using rule 12 (header1 -> LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET .)
     $end            reduce using rule 12 (header1 -> LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET .)
-    NEWLINE         shift and go to state 73
-    COMMENT         shift and go to state 74
+    NEWLINE         shift and go to state 74
+    COMMENT         shift and go to state 75
 
   ! COMMENT         [ reduce using rule 12 (header1 -> LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET .) ]
   ! NEWLINE         [ reduce using rule 12 (header1 -> LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET .) ]
 
 
-state 63
+state 64
 
     (23) name2 -> DOT elementoVar .
     (24) name2 -> DOT elementoVar . name2
@@ -1306,11 +1313,11 @@ state 63
 
     EQUAL           reduce using rule 23 (name2 -> DOT elementoVar .)
     RIGHTSQUAREBRACKET reduce using rule 23 (name2 -> DOT elementoVar .)
-    DOT             shift and go to state 25
+    DOT             shift and go to state 26
 
-    name2                          shift and go to state 75
+    name2                          shift and go to state 76
 
-state 64
+state 65
 
     (19) assignment -> name EQUAL elemento NEWLINE .
 
@@ -1323,7 +1330,7 @@ state 64
     $end            reduce using rule 19 (assignment -> name EQUAL elemento NEWLINE .)
 
 
-state 65
+state 66
 
     (28) lista -> LEFTSQUAREBRACKET RIGHTSQUAREBRACKET .
 
@@ -1339,28 +1346,28 @@ state 65
     RIGHTBRACKET    reduce using rule 28 (lista -> LEFTSQUAREBRACKET RIGHTSQUAREBRACKET .)
 
 
-state 66
+state 67
 
     (29) lista -> LEFTSQUAREBRACKET conteudo_lista . RIGHTSQUAREBRACKET
     (30) lista -> LEFTSQUAREBRACKET conteudo_lista . COMMA RIGHTSQUAREBRACKET
 
-    RIGHTSQUAREBRACKET shift and go to state 76
-    COMMA           shift and go to state 77
+    RIGHTSQUAREBRACKET shift and go to state 77
+    COMMA           shift and go to state 78
 
 
-state 67
+state 68
 
     (31) conteudo_lista -> elemento .
     (32) conteudo_lista -> elemento . COMMA conteudo_lista
 
   ! shift/reduce conflict for COMMA resolved as shift
     RIGHTSQUAREBRACKET reduce using rule 31 (conteudo_lista -> elemento .)
-    COMMA           shift and go to state 78
+    COMMA           shift and go to state 79
 
   ! COMMA           [ reduce using rule 31 (conteudo_lista -> elemento .) ]
 
 
-state 68
+state 69
 
     (33) object -> LEFTBRACKET RIGHTBRACKET .
 
@@ -1376,39 +1383,39 @@ state 68
     RIGHTBRACKET    reduce using rule 33 (object -> LEFTBRACKET RIGHTBRACKET .)
 
 
-state 69
+state 70
 
     (34) object -> LEFTBRACKET conteudo_object . RIGHTBRACKET
 
-    RIGHTBRACKET    shift and go to state 79
+    RIGHTBRACKET    shift and go to state 80
 
 
-state 70
+state 71
 
     (35) conteudo_object -> assignment_object .
     (36) conteudo_object -> assignment_object . COMMA conteudo_object
 
     RIGHTBRACKET    reduce using rule 35 (conteudo_object -> assignment_object .)
-    COMMA           shift and go to state 80
-
-
-state 71
-
-    (20) assignment_object -> name . EQUAL elemento
-
-    EQUAL           shift and go to state 81
+    COMMA           shift and go to state 81
 
 
 state 72
+
+    (20) assignment_object -> name . EQUAL elemento
+
+    EQUAL           shift and go to state 82
+
+
+state 73
 
     (15) header2 -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET . RIGHTSQUAREBRACKET
     (16) header2 -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET . RIGHTSQUAREBRACKET NEWLINE
     (17) header2 -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET . RIGHTSQUAREBRACKET COMMENT
 
-    RIGHTSQUAREBRACKET shift and go to state 82
+    RIGHTSQUAREBRACKET shift and go to state 83
 
 
-state 73
+state 74
 
     (13) header1 -> LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET NEWLINE .
 
@@ -1421,7 +1428,7 @@ state 73
     $end            reduce using rule 13 (header1 -> LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET NEWLINE .)
 
 
-state 74
+state 75
 
     (14) header1 -> LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET COMMENT .
 
@@ -1434,7 +1441,7 @@ state 74
     $end            reduce using rule 14 (header1 -> LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET COMMENT .)
 
 
-state 75
+state 76
 
     (24) name2 -> DOT elementoVar name2 .
 
@@ -1442,7 +1449,7 @@ state 75
     RIGHTSQUAREBRACKET reduce using rule 24 (name2 -> DOT elementoVar name2 .)
 
 
-state 76
+state 77
 
     (29) lista -> LEFTSQUAREBRACKET conteudo_lista RIGHTSQUAREBRACKET .
 
@@ -1458,14 +1465,14 @@ state 76
     RIGHTBRACKET    reduce using rule 29 (lista -> LEFTSQUAREBRACKET conteudo_lista RIGHTSQUAREBRACKET .)
 
 
-state 77
+state 78
 
     (30) lista -> LEFTSQUAREBRACKET conteudo_lista COMMA . RIGHTSQUAREBRACKET
 
-    RIGHTSQUAREBRACKET shift and go to state 83
+    RIGHTSQUAREBRACKET shift and go to state 84
 
 
-state 78
+state 79
 
     (32) conteudo_lista -> elemento COMMA . conteudo_lista
     (31) conteudo_lista -> . elemento
@@ -1511,46 +1518,46 @@ state 78
     (34) object -> . LEFTBRACKET conteudo_object RIGHTBRACKET
 
     INT             shift and go to state 19
-    FLOAT           shift and go to state 45
-    INF             shift and go to state 46
-    NAN             shift and go to state 47
-    HEXADECIMAL     shift and go to state 48
-    BINARY          shift and go to state 49
-    OCTAL           shift and go to state 50
+    FLOAT           shift and go to state 46
+    INF             shift and go to state 47
+    NAN             shift and go to state 48
+    HEXADECIMAL     shift and go to state 49
+    BINARY          shift and go to state 50
+    OCTAL           shift and go to state 51
     STRING          shift and go to state 18
-    MSTRING         shift and go to state 51
-    LITERALSTRING   shift and go to state 52
-    MLSTRING        shift and go to state 53
-    BOOLEAN         shift and go to state 54
-    DATE            shift and go to state 55
-    TIME            shift and go to state 56
-    DATETIME        shift and go to state 57
-    OFFSETDATETIME  shift and go to state 58
-    LEFTSQUAREBRACKET shift and go to state 59
-    LEFTBRACKET     shift and go to state 60
+    MSTRING         shift and go to state 52
+    LITERALSTRING   shift and go to state 53
+    MLSTRING        shift and go to state 54
+    BOOLEAN         shift and go to state 55
+    DATE            shift and go to state 56
+    TIME            shift and go to state 57
+    DATETIME        shift and go to state 58
+    OFFSETDATETIME  shift and go to state 59
+    LEFTSQUAREBRACKET shift and go to state 60
+    LEFTBRACKET     shift and go to state 61
 
-    elemento                       shift and go to state 67
-    conteudo_lista                 shift and go to state 84
-    int                            shift and go to state 27
-    float                          shift and go to state 28
-    inf                            shift and go to state 29
-    nan                            shift and go to state 30
-    hexadecimal                    shift and go to state 31
-    binary                         shift and go to state 32
-    octal                          shift and go to state 33
-    string                         shift and go to state 34
-    mstring                        shift and go to state 35
-    lstring                        shift and go to state 36
-    mlstring                       shift and go to state 37
-    boolean                        shift and go to state 38
-    date                           shift and go to state 39
-    time                           shift and go to state 40
-    datetime                       shift and go to state 41
-    offset_datetime                shift and go to state 42
-    lista                          shift and go to state 43
-    object                         shift and go to state 44
+    elemento                       shift and go to state 68
+    conteudo_lista                 shift and go to state 85
+    int                            shift and go to state 28
+    float                          shift and go to state 29
+    inf                            shift and go to state 30
+    nan                            shift and go to state 31
+    hexadecimal                    shift and go to state 32
+    binary                         shift and go to state 33
+    octal                          shift and go to state 34
+    string                         shift and go to state 35
+    mstring                        shift and go to state 36
+    lstring                        shift and go to state 37
+    mlstring                       shift and go to state 38
+    boolean                        shift and go to state 39
+    date                           shift and go to state 40
+    time                           shift and go to state 41
+    datetime                       shift and go to state 42
+    offset_datetime                shift and go to state 43
+    lista                          shift and go to state 44
+    object                         shift and go to state 45
 
-state 79
+state 80
 
     (34) object -> LEFTBRACKET conteudo_object RIGHTBRACKET .
 
@@ -1566,7 +1573,7 @@ state 79
     RIGHTBRACKET    reduce using rule 34 (object -> LEFTBRACKET conteudo_object RIGHTBRACKET .)
 
 
-state 80
+state 81
 
     (36) conteudo_object -> assignment_object COMMA . conteudo_object
     (35) conteudo_object -> . assignment_object
@@ -1584,14 +1591,14 @@ state 80
     STRING          shift and go to state 18
     INT             shift and go to state 19
 
-    assignment_object              shift and go to state 70
-    conteudo_object                shift and go to state 85
-    name                           shift and go to state 71
+    assignment_object              shift and go to state 71
+    conteudo_object                shift and go to state 86
+    name                           shift and go to state 72
     elementoVar                    shift and go to state 14
     string                         shift and go to state 16
     int                            shift and go to state 17
 
-state 81
+state 82
 
     (20) assignment_object -> name EQUAL . elemento
     (37) elemento -> . int
@@ -1635,45 +1642,45 @@ state 81
     (34) object -> . LEFTBRACKET conteudo_object RIGHTBRACKET
 
     INT             shift and go to state 19
-    FLOAT           shift and go to state 45
-    INF             shift and go to state 46
-    NAN             shift and go to state 47
-    HEXADECIMAL     shift and go to state 48
-    BINARY          shift and go to state 49
-    OCTAL           shift and go to state 50
+    FLOAT           shift and go to state 46
+    INF             shift and go to state 47
+    NAN             shift and go to state 48
+    HEXADECIMAL     shift and go to state 49
+    BINARY          shift and go to state 50
+    OCTAL           shift and go to state 51
     STRING          shift and go to state 18
-    MSTRING         shift and go to state 51
-    LITERALSTRING   shift and go to state 52
-    MLSTRING        shift and go to state 53
-    BOOLEAN         shift and go to state 54
-    DATE            shift and go to state 55
-    TIME            shift and go to state 56
-    DATETIME        shift and go to state 57
-    OFFSETDATETIME  shift and go to state 58
-    LEFTSQUAREBRACKET shift and go to state 59
-    LEFTBRACKET     shift and go to state 60
+    MSTRING         shift and go to state 52
+    LITERALSTRING   shift and go to state 53
+    MLSTRING        shift and go to state 54
+    BOOLEAN         shift and go to state 55
+    DATE            shift and go to state 56
+    TIME            shift and go to state 57
+    DATETIME        shift and go to state 58
+    OFFSETDATETIME  shift and go to state 59
+    LEFTSQUAREBRACKET shift and go to state 60
+    LEFTBRACKET     shift and go to state 61
 
-    elemento                       shift and go to state 86
-    int                            shift and go to state 27
-    float                          shift and go to state 28
-    inf                            shift and go to state 29
-    nan                            shift and go to state 30
-    hexadecimal                    shift and go to state 31
-    binary                         shift and go to state 32
-    octal                          shift and go to state 33
-    string                         shift and go to state 34
-    mstring                        shift and go to state 35
-    lstring                        shift and go to state 36
-    mlstring                       shift and go to state 37
-    boolean                        shift and go to state 38
-    date                           shift and go to state 39
-    time                           shift and go to state 40
-    datetime                       shift and go to state 41
-    offset_datetime                shift and go to state 42
-    lista                          shift and go to state 43
-    object                         shift and go to state 44
+    elemento                       shift and go to state 87
+    int                            shift and go to state 28
+    float                          shift and go to state 29
+    inf                            shift and go to state 30
+    nan                            shift and go to state 31
+    hexadecimal                    shift and go to state 32
+    binary                         shift and go to state 33
+    octal                          shift and go to state 34
+    string                         shift and go to state 35
+    mstring                        shift and go to state 36
+    lstring                        shift and go to state 37
+    mlstring                       shift and go to state 38
+    boolean                        shift and go to state 39
+    date                           shift and go to state 40
+    time                           shift and go to state 41
+    datetime                       shift and go to state 42
+    offset_datetime                shift and go to state 43
+    lista                          shift and go to state 44
+    object                         shift and go to state 45
 
-state 82
+state 83
 
     (15) header2 -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET .
     (16) header2 -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET . NEWLINE
@@ -1686,14 +1693,14 @@ state 82
     STRING          reduce using rule 15 (header2 -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET .)
     INT             reduce using rule 15 (header2 -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET .)
     $end            reduce using rule 15 (header2 -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET .)
-    NEWLINE         shift and go to state 87
-    COMMENT         shift and go to state 88
+    NEWLINE         shift and go to state 88
+    COMMENT         shift and go to state 89
 
   ! COMMENT         [ reduce using rule 15 (header2 -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET .) ]
   ! NEWLINE         [ reduce using rule 15 (header2 -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET .) ]
 
 
-state 83
+state 84
 
     (30) lista -> LEFTSQUAREBRACKET conteudo_lista COMMA RIGHTSQUAREBRACKET .
 
@@ -1709,7 +1716,7 @@ state 83
     RIGHTBRACKET    reduce using rule 30 (lista -> LEFTSQUAREBRACKET conteudo_lista COMMA RIGHTSQUAREBRACKET .)
 
 
-state 84
+state 85
 
     (32) conteudo_lista -> elemento COMMA conteudo_lista .
 
@@ -1717,14 +1724,14 @@ state 84
     COMMA           reduce using rule 32 (conteudo_lista -> elemento COMMA conteudo_lista .)
 
 
-state 85
+state 86
 
     (36) conteudo_object -> assignment_object COMMA conteudo_object .
 
     RIGHTBRACKET    reduce using rule 36 (conteudo_object -> assignment_object COMMA conteudo_object .)
 
 
-state 86
+state 87
 
     (20) assignment_object -> name EQUAL elemento .
 
@@ -1732,7 +1739,7 @@ state 86
     RIGHTBRACKET    reduce using rule 20 (assignment_object -> name EQUAL elemento .)
 
 
-state 87
+state 88
 
     (16) header2 -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET NEWLINE .
 
@@ -1745,7 +1752,7 @@ state 87
     $end            reduce using rule 16 (header2 -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET NEWLINE .)
 
 
-state 88
+state 89
 
     (17) header2 -> LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET COMMENT .
 
@@ -1760,9 +1767,9 @@ state 88
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
-WARNING: shift/reduce conflict for NEWLINE in state 26 resolved as shift
-WARNING: shift/reduce conflict for NEWLINE in state 62 resolved as shift
-WARNING: shift/reduce conflict for COMMENT in state 62 resolved as shift
-WARNING: shift/reduce conflict for COMMA in state 67 resolved as shift
-WARNING: shift/reduce conflict for NEWLINE in state 82 resolved as shift
-WARNING: shift/reduce conflict for COMMENT in state 82 resolved as shift
+WARNING: shift/reduce conflict for NEWLINE in state 27 resolved as shift
+WARNING: shift/reduce conflict for NEWLINE in state 63 resolved as shift
+WARNING: shift/reduce conflict for COMMENT in state 63 resolved as shift
+WARNING: shift/reduce conflict for COMMA in state 68 resolved as shift
+WARNING: shift/reduce conflict for NEWLINE in state 83 resolved as shift
+WARNING: shift/reduce conflict for COMMENT in state 83 resolved as shift

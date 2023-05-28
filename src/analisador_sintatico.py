@@ -74,7 +74,7 @@ def p_newline(p):
 
 def p_comment(p):
     """
-        comment : COMMENT
+        comment : COMMENT NEWLINE
     """
     p[0] = {'type': 'comment', 'value':p[1]}
 
@@ -178,8 +178,8 @@ def p_lista(p):
 
 def p_conteudo_lista(p):
     """
-        conteudo_lista : elemento 
-                    | elemento COMMA conteudo_lista
+        conteudo_lista : elemento
+                | elemento COMMA conteudo_lista
     """
     if len(p) == 2:
         p[0] = [p[1]] 
@@ -235,13 +235,11 @@ def p_mstring(p):
     """
     p[0] =  p[1][3:-3]
 
-
 def p_mlstring(p):
     """
         mlstring : MLSTRING
     """
     p[0] =  p[1][3:-3]
-
 
 def p_string(p):
     """
@@ -249,13 +247,11 @@ def p_string(p):
     """
     p[0] =  p[1][1:-1]
 
-
 def p_lstring(p):
     """
         lstring : LITERALSTRING
     """
     p[0] =  p[1][1:-1]
-
 
 def p_number(p):
     """
