@@ -1,7 +1,7 @@
 title = "TOML Example"
 
 [owner]
-"1.20.23.12" = "TOML Example2"
+1202312 = "TOML Example2"
 name = "Tom Preston-Werner"
 date = 2010-04-23
 time = 21:30:00

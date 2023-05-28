@@ -1,42 +1,33 @@
 {
-    "tittle": "TOML EXAMPLE",
-    "person": {
-        "name": {
-            "proprio": "John",
-            "secundario": "Doe"
+    "title": "TOML Example",
+    "owner": {
+        "1202312": "TOML Example2",
+        "name": "Tom Preston-Werner",
+        "date": "010-04-2",
+        "time": "1:30:0"
+    },
+    "database": {
+        "server": "192.168.1.1",
+        "ports": [
+            8001,
+            8001,
+            8002
+        ],
+        "connection_max": 5000,
+        "enabled": true
+    },
+    "servers": {
+        "alpha": {
+            "ip": "10.0.0.1",
+            "dc": "eqdc10"
         },
-        "age": {
-            "birth": 30
-        }
-    },
-    "animal": {
-        "type": "raposa",
-        "pet_name": "coccy",
-        "pet_age": 12,
-        "pet": {
-            "type": "dog",
-            "pet_name": "Puffy",
-            "pet_age": 3
-        }
-    },
-    "address": {
-        "road": {
-            "California": {
-                "street": "123 Main St",
-                "city": "Anytown",
-                "state": "CA",
-                "zip": 12345,
-                "mylist": [
-                    0,
-                    true,
-                    "falso"
-                ],
-                "pessoa": {
-                    "nome": "Nail",
-                    "idade": 24
-                },
-                "final": true
-            }
+        "beta": {
+            "ip": "10.0.0.2",
+            "dc": "eqdc10",
+            "hosts": [
+                "alpha",
+                "omega"
+            ]
         }
     }
 }

@@ -160,6 +160,7 @@ def p_elemento_var(p):
     """
         elementoVar : VAR
                     | string
+                    | int
     """
     p[0] = p[1]
 
