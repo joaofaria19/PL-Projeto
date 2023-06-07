@@ -1,27 +1,20 @@
-title = "TOML Example"
+tittle = "TOML example 1"
 
-[owner]
-name = "Tom Preston-Werner"
-date = 2010-04-23
-time = 21:30:00
+[[fruits]]
+name = "apple"
 
-[database]
-server = "192.168.1.1"
-ports = [ 8001, 8001, 8002 ]
-connection_max = 5000
-enabled = true
+[fruits.physical] # subtable
+color = "red"
+shape = "round"
 
-[servers]
-[servers.alpha]
-ip = "10.0.0.1"
-dc = "eqdc10"
+[[fruits.varieties]] # nested array of tables
+name = "red delicious"
 
-[servers.beta]
-ip = "10.0.0.2"
-dc = "eqdc10"
+[[fruits.varieties]]
+name = "granny smith"
 
-# Line breaks are OK when inside arrays
-hosts = [
-    "alpha",
-    "omega"
-]
+[[fruits]]
+name = "banana"
+
+[[fruits.varieties]]
+name = "plantain"

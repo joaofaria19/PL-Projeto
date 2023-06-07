@@ -54,7 +54,6 @@ def p_statements(p):
         pass        
     p[0] = parser.toml.data
 
-
 def p_statement(p):
     """
         statement : table
@@ -88,7 +87,7 @@ def p_header1(p):
     """
         header1 : LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET 
             | LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET NEWLINE
-            | LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET COMMENT
+            | LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET COMMENT NEWLINE
     """
     if len(p) == 4:
         if p.lexer.lineno == p.parser.size:
@@ -103,7 +102,7 @@ def p_header2(p):
     """
         header2 : LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET 
             | LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET NEWLINE
-            | LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET COMMENT
+            | LEFTSQUAREBRACKET LEFTSQUAREBRACKET name RIGHTSQUAREBRACKET RIGHTSQUAREBRACKET COMMENT NEWLINE
     
     """
     if len(p) == 6:
@@ -321,7 +320,6 @@ def p_boolean(p):
     else: 
         p[0] = False
         
-
 def p_date(p):
     """
         date : DATE
